@@ -1,0 +1,92 @@
+@charset "UTF-8";
+
+@font-face {
+  font-family: "hotel-icons";
+  src:url("../fonts/hotel-icons.eot");
+  src:url("../fonts/hotel-icons.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/hotel-icons.woff") format("woff"),
+    url("../fonts/hotel-icons.ttf") format("truetype"),
+    url("../fonts/hotel-icons.svg#hotel-icons") format("svg");
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+[class^="fa-extend-"], [class*=" fa-extend-"] {
+  font-family: 'hotel-icons' !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.fa-extend-wifi:before {
+  content: "\61";
+}
+.fa-extend-elevator:before {
+  content: "\62";
+}
+.fa-extend-laundry:before {
+  content: "\63";
+}
+.fa-extend-gym:before {
+  content: "\64";
+}
+.fa-extend-meeting-room:before {
+  content: "\65";
+}
+.fa-extend-parked-car:before {
+  content: "\66";
+}
+.fa-extend-restaurant:before {
+  content: "\67";
+}
+.fa-extend-spa:before {
+  content: "\68";
+}
+.fa-extend-swimming-pool:before {
+  content: "\69";
+}
+.fa-extend-taxi:before {
+  content: "\6a";
+}
+.fa-extend-tv-cap:before {
+  content: "\6b";
+}
+.fa-extend-breakfast:before {
+  content: "\6c";
+}
+.fa-extend-motobike:before {
+  content: "\6d";
+}
+.fa-extend-bycicle:before {
+  content: "\6e";
+}
+.fa-extend-car:before {
+  content: "\6f";
+}
+.fa-extend-cruise:before {
+  content: "\70";
+}
+.fa-extend-electric-car:before {
+  content: "\71";
+}
+.fa-extend-golf:before {
+  content: "\72";
+}
+.fa-extend-bed:before {
+  content: "\73";
+}
+.fa-extend-beach:before {
+  content: "\74";
+}
+.fa-extend-air-transport:before {
+  content: "\75";
+}
+.fa-extend-game-1:before {
+  content: "\76";
+}
+.fa-extend-game-2:before {
+  content: "\77";
+}
+.fa-extend-game-3:before {
+  content: "\78";
+}

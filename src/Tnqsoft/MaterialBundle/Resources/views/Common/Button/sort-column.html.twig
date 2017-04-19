@@ -1,0 +1,12 @@
+{% if field == orderBy and orderDir == 'asc' %}
+    {% set direct = 'desc' %}
+{% else %}
+    {% set direct = 'asc' %}
+{% endif %}
+
+<a href="{{ path(route, app.request.query.all|merge({'orderBy': field, 'orderDir': direct })) }}">
+    {% if field == orderBy %}
+        <i class="fa fa-sort-alpha-{{ orderDir }} text-danger"></i>
+    {% endif %}
+    {{ label | trans }}
+</a>

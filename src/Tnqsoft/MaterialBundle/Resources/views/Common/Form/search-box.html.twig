@@ -1,0 +1,13 @@
+<form action="{{ path(route) }}" method="get">
+    <div class="input-group input-group-sm" style="width: 200px;">
+            <input type="text" name="keyword" value="{{ keyword }}" class="form-control pull-right" placeholder="Từ khóa...">
+            <div class="input-group-btn">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-search"></i>
+                </button>
+                <a href="{{ path(route) }}" class="btn btn-default">
+                    <i class="fa fa-refresh"></i>
+                </a>
+            </div>
+    </div>
+</form>

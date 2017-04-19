@@ -1,0 +1,30 @@
+services:
+
+    log_format:
+        class: Monolog\Formatter\LineFormatter
+        arguments:
+            - "[%%datetime%%] %%channel%%.%%level_name%%\n\t[MESSAGE] %%message%%\n\t[CONTEXT] %%context%%\n"
+
+    tnqsoft_material.twig.extension.common:
+        class: Tnqsoft\MaterialBundle\Twig\Extension\CommonExtension
+        public: false
+        tags:
+            - { name: twig.extension }
+
+    tnqsoft_material.service.email:
+        class: Tnqsoft\MaterialBundle\Service\Email
+        arguments: ['%mailer_noreply%', '%mailer_list_sources%', '%mailer_list_sources_password%', '@twig']
+
+    tnqsoft_material.validator.base:
+        class: Tnqsoft\MaterialBundle\Validator\BaseValidator
+        #abstract: true
+        calls:
+            - [setValidator, ["@validator"]]
+
+    tnqsoft_material.data_access.base:
+        class: Tnqsoft\MaterialBundle\DataAccess\BaseDataAccess
+        arguments: ['@doctrine.orm.entity_manager']
+
+    tnqsoft_material.data_access.example:
+        parent: tnqsoft_material.data_access.base
+        class: Tnqsoft\MaterialBundle\DataAccess\ExampleDataAccess

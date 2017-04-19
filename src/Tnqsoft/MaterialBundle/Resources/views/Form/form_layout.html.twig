@@ -1,0 +1,99 @@
+{% extends 'bootstrap_3_layout.html.twig' %}
+
+{% block field_help %}
+    {% if attr.help is defined and attr.help %}
+        <p class="help-block">{{ attr.help|trans }}</p>
+    {% endif %}
+{% endblock field_help %}
+
+{# Rows #}
+
+{% block form_row -%}
+    <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+        {{- form_label(form) -}}
+        <div class="{{ block('form_group_class') }}">
+            {{- form_widget(form) -}}
+            {{- form_errors(form) -}}
+            {{ block('field_help') }}
+        </div>
+{##}</div>
+{%- endblock form_row %}
+
+{# Labels #}
+{%- block form_label -%}
+    {% if label is not same as(false) -%}
+        {% if not compound -%}
+            {% set label_attr = label_attr|merge({'for': id, 'class': (label_attr.class|default('') ~ ' control-label')}) %}
+        {%- endif %}
+        {% if required -%}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' control-label required')|trim}) %}
+        {%- endif %}
+        {% if label is empty -%}
+            {%- if label_format is not empty -%}
+                {% set label = label_format|replace({
+                    '%name%': name,
+                    '%id%': id,
+                }) %}
+            {%- else -%}
+                {% set label = name|humanize %}
+            {%- endif -%}
+        {%- endif -%}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+        {{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}
+        {% if required %}
+            <span class="required text-danger" title="This field is required">*</span>
+        {% endif %}
+        :
+        </label>
+    {%- endif -%}
+{%- endblock form_label -%}
+
+{% block submit_row -%}
+    {% spaceless %}
+        {{ form_widget(form) }}
+    {% endspaceless %}
+{% endblock submit_row %}
+
+{%- block button_widget -%}
+    {% if type is defined and type in ['submit'] %}
+        {% set attr = attr|merge({class: (attr.class|default('btn-primary') ~ ' btn')|trim}) %}
+    {% else %}
+        {% set attr = attr|merge({class: (attr.class|default('btn-default') ~ ' btn')|trim}) %}
+    {% endif %}
+    {%- if label is empty -%}
+        {%- if label_format is not empty -%}
+            {% set label = label_format|replace({
+            '%name%': name,
+            '%id%': id,
+            }) %}
+        {%- else -%}
+            {% set label = name|humanize %}
+        {%- endif -%}
+    {%- endif -%}
+    <button type="{{ type|default('button') }}" {{ block('button_attributes') }}>
+        {{ block('button_icon_left') }}
+        {{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}
+        {{ block('button_icon_right') }}
+    </button>
+{%- endblock button_widget -%}
+
+{% block button_icon_left %}
+    {% if attr.iconLeft is defined and attr.iconLeft %}
+        <i class="{{ attr.iconLeft }}"></i>
+    {% endif %}
+{% endblock button_icon_left %}
+
+{% block button_icon_right %}
+    {% if attr.iconRight is defined and attr.iconRight %}
+        <i class="{{ attr.iconRight }}"></i>
+    {% endif %}
+{% endblock button_icon_right %}
+
+{% block checkbox_widget %}
+    {% if label is empty %}
+        {% set label = name|humanize %}
+    {% endif %}
+    {% spaceless %}
+        <p class="checkbox"><label  for="{{ id }}"><input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} /><span class="label-text">{{ label|trans|raw }}</span></label></p>
+    {% endspaceless %}
+{% endblock checkbox_widget %}

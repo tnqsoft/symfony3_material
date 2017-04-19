@@ -1,0 +1,17 @@
+{% if record.isLocked is defined and record.isLocked == true %}
+    <a href="#" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="right" title="Bản ghi bị khóa">
+        <i class="fa fa-ban"></i>
+    </a>
+{% else %}
+    {% if record.isActive is defined %}
+        {% if record.isActive == 1 %}
+            <a href="{{ path(actionName, {'id': record.id, 'status': 'false' }) }}" class="btn btn-default btn-sm btn-flat" data-toggle="tooltip" data-placement="right" title="Hoạt động">
+                <i class="fa fa-unlock"></i>
+            </a>
+        {% else %}
+            <a href="{{ path(actionName, {'id': record.id, 'status': 'true' }) }}" class="btn btn-danger btn-sm btn-flat" data-toggle="tooltip" data-placement="right" title="Đang khóa">
+                <i class="fa fa-lock"></i>
+            </a>
+        {% endif %}
+    {% endif %}
+{% endif %}

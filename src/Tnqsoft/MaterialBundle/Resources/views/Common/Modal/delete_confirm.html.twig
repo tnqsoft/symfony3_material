@@ -1,0 +1,35 @@
+<div class="modal inmodal" id="modalDelete" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content animated flipInY">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{{ 'Bỏ qua'|trans }}</span></button>
+                <h4 class="modal-title">{{ 'Xác nhận xóa'|trans }}</h4>
+            </div>
+            <div class="modal-body">
+                <p class="text-center">
+                    <span class="fa-stack fa-2x">
+                        <i class="fa fa-circle fa-stack-2x text-info"></i>
+                        <i class="fa fa-question fa-stack-1x fa-inverse"></i>
+                    </span>
+                </p>
+                <p class="text-center text-danger m-b-20"><strong>{{ 'Bạn có muốn thực sự xóa bản ghi ?'|trans }}</strong></p>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-5">
+                        <button type="button" class="btn btn-white btn-block btn-flat" data-dismiss="modal">
+                            <i class="fa fa-times"></i>
+                            {{ 'Bỏ qua'|trans }}
+                        </button>
+                    </div>
+                    <div class="col-md-5 col-md-offset-2">
+                        <button type="button" class="btn btn-danger btn-block btn-confirm-delete btn-flat">
+                            <i class="fa fa-check"></i>
+                            {{ 'Đồng ý'|trans }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

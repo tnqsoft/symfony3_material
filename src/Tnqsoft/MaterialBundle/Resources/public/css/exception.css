@@ -1,0 +1,22 @@
+body {
+    background: #d2d6de;
+}
+
+.error-box {
+    padding: 40px;
+    border: 1px solid #eee;
+    width: 700px;
+    max-width: 80%;
+    margin: 30px auto;
+    word-wrap: break-word;
+    background-color: #fff;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    -webkit-box-shadow: -1px 0px 10px 0px rgba(0,0,0,0.48);
+    -moz-box-shadow: -1px 0px 10px 0px rgba(0,0,0,0.48);
+    box-shadow: -1px 0px 10px 0px rgba(0,0,0,0.48);
+}
+.error-box h1 {
+    font-size: 3.5em;
+}
