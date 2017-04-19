@@ -31,7 +31,7 @@ services:
 
     tnqsoft_material.validator.file:
         class: Tnqsoft\MaterialBundle\Validator\FileValidator
-        parent: common.validator.base
+        parent: tnqsoft_material.validator.base
 
     tnqsoft_material.process.upload:
         class: Tnqsoft\MaterialBundle\Process\UploadProcess
