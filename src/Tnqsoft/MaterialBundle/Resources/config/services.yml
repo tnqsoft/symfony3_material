@@ -28,3 +28,16 @@ services:
     tnqsoft_material.data_access.example:
         parent: tnqsoft_material.data_access.base
         class: Tnqsoft\MaterialBundle\DataAccess\ExampleDataAccess
+
+    tnqsoft_material.validator.file:
+        class: Tnqsoft\MaterialBundle\Validator\FileValidator
+        parent: common.validator.base
+
+    tnqsoft_material.process.upload:
+        class: Tnqsoft\MaterialBundle\Process\UploadProcess
+        arguments:
+            - '%upload_tmp_dir%'
+            - '%upload_tmp_path%'
+            - '%upload_max_size%'
+            - '%upload_max_width%'
+            - '@security.token_storage'

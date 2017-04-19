@@ -21,5 +21,21 @@ parameters:
     logger_mail_subject: "[SYMFONY3-MATERIAL][PROD] Lỗi hệ thống!"
     logger_mail_receiver: [tuanquynh0508@gmail.com]
 
+    upload_max_size: 2097152
+    upload_max_width: 800
+    tmp_dir: "%kernel.root_dir%/../var/tmp"
+    upload_dir: "%kernel.root_dir%/../web/uploads"
+    upload_tmp_dir: "%upload_dir%/tmp"
+    avatar_dir: "%upload_dir%/avatars"
+    banner_dir: "%upload_dir%/banners"
+    news_dir: "%upload_dir%/news/"
+    page_dir: "%upload_dir%/page/"
+    upload_path: "/uploads"
+    upload_tmp_path: "%upload_path%/tmp/"
+    avatar_path: "%upload_path%/avatars/"
+    banner_path: "%upload_path%/banners/"
+    news_path: "%upload_path%/news/"
+    page_path: "%upload_path%/page/"
+
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
