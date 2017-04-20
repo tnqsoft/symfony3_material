@@ -2,19 +2,12 @@
 
 namespace Tnqsoft\MaterialBundle\Process;
 
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-
 use Tnqsoft\MaterialBundle\Service\Upload;
 use Tnqsoft\MaterialBundle\Service\Utility;
 use Tnqsoft\MaterialBundle\Service\Model\FileItem;
 
 class UploadProcess
 {
-    /**
-     * @var TokenStorage
-     */
-    protected $tokenStorage;
-
     /**
      * @var string
      */
@@ -53,12 +46,7 @@ class UploadProcess
     /**
      * @var string
      */
-    protected $cropDir;
-
-    /**
-     * @var string
-     */
-    protected $cropPath;
+    protected $baseDir;
 
     /**
      * __construct
@@ -67,15 +55,13 @@ class UploadProcess
      * @param string       $tmpPath
      * @param float       $maxSize
      * @param integer       $maxWidth
-     * @param TokenStorage $tokenStorage
      */
-    public function __construct($tmpDir, $tmpPath, $maxSize, $maxWidth, TokenStorage $tokenStorage)
+    public function __construct($tmpDir, $tmpPath, $maxSize, $maxWidth)
     {
         $this->tmpDir = realpath($tmpDir).DIRECTORY_SEPARATOR;
         $this->tmpPath = $tmpPath;
         $this->maxSize = $maxSize;
         $this->maxWidth = $maxWidth;
-        $this->tokenStorage = $tokenStorage;
     }
 
     /**
@@ -90,57 +76,15 @@ class UploadProcess
     }
 
     /**
-     * Upload File
-     *
-     * @return array
-     */
-    public function upload()
-    {
-        $handle = new Upload($_FILES[$this->fileField]);
-        if ($handle->uploaded) {
-            // Set Options
-            $handle->mime_check = true;
-            $handle->no_script = true;
-            $handle->file_auto_rename = true;
-            $handle->file_max_size = $this->maxSize;
-            $handle->allowed = $this->allowList;
-            $handle->jpeg_quality = 100;
-            $handle->dir_auto_create  = true;
-            $handle->dir_auto_chmod = true;
-            $handle->dir_chmod = 0777;
-            $handle->file_new_name_body = $this->formatName($handle->file_src_name_body);
-            //$handle->image_convert = jpg;
-            if ($handle->image_src_x > $this->maxWidth) {
-                $handle->image_resize = true;
-                $handle->image_x = $this->maxWidth;
-                $handle->image_ratio_y = true;
-            }
-
-            $handle->Process($this->getTmpDir());
-            if ($handle->processed) {
-                $handle->Clean();
-                //list($width, $height) = getimagesize($handle->file_dst_pathname);
-                $url = $this->getTmpPath().$handle->file_dst_name;
-
-                return array(
-                    'image' => $url,
-                    'width' => $handle->image_dst_x,
-                    'height' => $handle->image_dst_y,
-                );
-            } else {
-                throw new \RuntimeException($handle->error);
-            }
-        }
-    }
-
-    /**
      * Upload File with FileItem Model
      * TODO: Replace all method to use upload2
      *
      * @return array
      */
-    public function upload2($baseDir, $basePath)
+    public function upload($baseDir, $basePath)
     {
+        $this->baseDir = $baseDir;
+        $this->basePath = $basePath;
         $handle = new Upload($_FILES[$this->fileField]);
         if ($handle->uploaded) {
             // Set Options
@@ -161,11 +105,11 @@ class UploadProcess
                 $handle->image_ratio_y = true;
             }
 
-            $handle->Process($baseDir);
+            $handle->Process($this->baseDir);
             if ($handle->processed) {
                 $handle->Clean();
 
-                return new FileItem($handle->file_dst_pathname, $basePath);
+                return new FileItem($handle->file_dst_pathname, $this->basePath);
             } else {
                 throw new \RuntimeException($handle->error);
             }
@@ -182,15 +126,18 @@ class UploadProcess
      * @param  float  $y2   [description]
      * @return array
      */
-    public function cropImage($file, $x1, $x2, $y1, $y2)
+    public function cropImage($baseDir, $basePath, $file, $x1, $x2, $y1, $y2)
     {
-        $handle = new Upload($this->getTmpDir().$file);
+        $this->baseDir = $baseDir;
+        $this->basePath = $basePath;
+        $handle = new Upload($this->baseDir.$file);
         if ($handle->uploaded) {
             // Set Options
             $handle->image_resize = false;
             $handle->mime_check = true;
             $handle->no_script = true;
-            $handle->file_auto_rename = true;
+            $handle->file_auto_rename = false;
+            $handle->file_overwrite = true;
             $handle->file_max_size = $this->maxSize;
             $handle->allowed = $this->allowList;
             $handle->jpeg_quality = 100;
@@ -201,34 +148,14 @@ class UploadProcess
                 $handle->image_crop = array($y1, $handle->image_src_x-$x2, $handle->image_src_y-$y2, $x1);
             }
 
-            $handle->Process($this->getCropDir());
+            $handle->Process($this->baseDir);
             if ($handle->processed) {
-                $handle->Clean();
-
-                $url = $this->getCropPath().$handle->file_dst_name;
-
-                return array(
-                    'image' => $url,
-                    'filename' => $handle->file_dst_name,
-                );
+                return new FileItem($handle->file_dst_pathname, $this->basePath);
+                // $handle->Clean();
             } else {
                 throw new \RuntimeException($handle->error);
             }
         }
-    }
-
-    /**
-     * Filter Path
-     *
-     * @param  string  $path
-     * @return string
-     */
-    public function filterPath($path)
-    {
-        $user = $this->tokenStorage->getToken()->getUser();
-        $path = str_replace('{username}', $user->getUsername(), $path);
-
-        return $path;
     }
 
     /**
@@ -400,51 +327,25 @@ class UploadProcess
     }
 
     /**
-     * Get the value of Crop Dir
+     * Get the value of Base Dir
      *
      * @return string
      */
-    public function getCropDir()
+    public function getBaseDir()
     {
-        return $this->cropDir;
+        return $this->baseDir;
     }
 
     /**
-     * Set the value of Crop Dir
+     * Set the value of Base Dir
      *
-     * @param string cropDir
+     * @param string baseDir
      *
      * @return self
      */
-    public function setCropDir($cropDir)
+    public function setBaseDir($baseDir)
     {
-        //$this->cropDir = realpath($cropDir).DIRECTORY_SEPARATOR;
-        $this->cropDir = $this->filterPath($cropDir);
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Crop Path
-     *
-     * @return string
-     */
-    public function getCropPath()
-    {
-        return $this->getBasePath().$this->cropPath;
-    }
-
-    /**
-     * Set the value of Crop Path
-     *
-     * @param string cropPath
-     *
-     * @return self
-     */
-    public function setCropPath($cropPath)
-    {
-        //$this->cropPath = $cropPath;
-        $this->cropPath = $this->filterPath($cropPath);
+        $this->baseDir = $baseDir;
 
         return $this;
     }

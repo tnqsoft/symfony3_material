@@ -1,8 +1,7 @@
 .file-item {
-    position: relative;
 }
-.file-item .box {
-    border: 1px solid #ddd;
+.file-item .thumbnail {
+    position: relative;
 }
 .file-item .file-item-selected {
     display: none;
@@ -11,27 +10,55 @@
     right: 5px;
     background-color: #fff;
 }
-.file-item.active .box {
-    border-color: #00A65A;
+.file-item .btn-delete {
+    display: none;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    color: red;
+}
+.file-item .btn-edit {
+    display: none;
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    color: #ff6600;
+}
+.file-item:hover .btn-delete,
+.file-item:hover .btn-edit {
+    display: inline-block;
 }
 .file-item.active .file-item-selected {
     display: inline-block;
 }
-.file-item .box .overlay {
-    display: none;
+.file-item.active .thumbnail {
+    border-color: #00A65A;
 }
-.file-item.state-uploading .box .overlay {
-    display: block;
+.file-item.active .file-item-selected {
+    color: #00A65A;
 }
 .file-item .file-item-display {
     height: 90px;
 }
 .file-item .file-item-name {
     height: 30px;
-    font-size: 11px;
+    font-size: 12px;
     margin-top: 5px;
     overflow: hidden;
 }
+.file-item .progress {
+    height: 5px;
+    margin-bottom: 0px;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    display: none;
+}
+.file-item.state-uploading .progress {
+    display: block;
+}
+
 .file-item-info {
     background-color: #F7F7F9;
     padding: 20px;
@@ -58,4 +85,8 @@
     height: 410px;
     display: none;
     overflow: hidden;
+}
+
+.jcrop-keymgr {
+    opacity: 0;
 }

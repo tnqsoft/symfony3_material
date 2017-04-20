@@ -34,26 +34,72 @@ FileManage.prototype.bindAction = function() {
             _this.fileManagerBox.modal('hide');
         });
 
-    this.fileManagerBox.on('click', '.file-item', function() {
+    this.fileManagerBox.on('click', '.file-item', function(e) {
+        e.stopPropagation();
         let reverse = $(this).hasClass('active');
-        $('.file-item', this.fileManagerBox).removeClass('active');
-        $('.file-item-info', _this.fileManagerBox).hide();
-        $('.btn-ok', _this.fileManagerBox).prop("disabled", true);
-        if (reverse === false) {
-          $(this).addClass('active');
-          _this.showInfo($(this));
-          $('.btn-ok', _this.fileManagerBox).prop('disabled', false);;
-        }
+        _this.clearSelectItem();
+        $(this).addClass('active');
+        _this.showInfo($(this));
+        $('.btn-ok', _this.fileManagerBox).prop('disabled', false);
+    }).on('dblclick', '.file-item', function(e) {
+        e.stopPropagation();
+        $('.btn-ok', _this.fileManagerBox).trigger('click');
+    });
+
+    this.fileManagerBox.on('click', '.list-file', function() {
+        _this.clearSelectItem();
     });
 
     this.fileManagerBox.on('click', '.file-item .btn-delete', function(e) {
-        e.preventDefault();
+        e.stopPropagation();
         let item = $(this).closest('.file-item');
         let popup = new B3Popup();
         popup.confirmBox(function() {
             _this.deleteFile(item);
         });
     });
+
+    this.fileManagerBox.on('click', '.file-item .btn-edit', function(e) {
+        e.stopPropagation();
+        let item = $(this).closest('.file-item');
+        _this.cropFile(item);
+    });
+};
+
+FileManage.prototype.cropFile = function(item) {
+    var _parent = this;
+    let options = {
+        title: 'Cắt tỉa ảnh',
+        imgDefault: '/bundles/tnqsoftmaterial/img/no-picture.png',
+        btnOkText: 'Cắt ảnh',
+        btnCancelText: 'Lưu luôn ảnh',
+        aspectRatio: null
+    };
+    let info = JSON.parse(item.data('context'));
+    let apiCrop = Routing.generate('api_file_crop', {
+        type: item.data('type'),
+        path: item.data('path')
+        // file: item.data('file')
+    });
+    let cropFile = new CropFile(apiCrop, options);
+    cropFile.setOnCropSuccess(function(_this, file){
+        $('.file-item-display', item).attr('src', file.url + '?rnd=' + getUnixTimestamp());
+        $('.file-item-name', item).html(file.name);
+        item.data('file', file.name);
+        item.data('context', JSON.stringify(file));
+        _parent.showInfo(item);
+    });
+    cropFile.setOnCropError(function(_this, error){
+        console.log(error);
+    });
+    cropFile.showCropModal(info.url, info.width, info.height);
+};
+
+
+FileManage.prototype.clearSelectItem = function() {
+    $('.file-item', this.fileManagerBox).removeClass('active');
+    $('.file-item-info', this.fileManagerBox).hide();
+    $('.btn-ok', this.fileManagerBox).prop("disabled", true);
 };
 
 FileManage.prototype.loadList = function() {
@@ -106,6 +152,7 @@ FileManage.prototype.showInfo = function(item) {
 };
 
 FileManage.prototype.deleteFile = function(item) {
+    let _this = this;
     let api = new ApiCrud('', '', '', Routing.generate('api_file_delete', {
         type: item.data('type'),
         path: item.data('path'),
@@ -114,9 +161,9 @@ FileManage.prototype.deleteFile = function(item) {
     api.doDelete(0)
         .done(function() {
             item.remove();
+            $('.file-item-info', _this.fileManagerBox).hide();
         })
         .fail(function(error) {
-            console.log(error);
             let popup = new B3Popup();
             popup.alertBox('error', error.responseJSON.error);
         });
@@ -127,7 +174,7 @@ FileManage.prototype.renderListFiles = function(list) {
         for (let i = 0; i < this.listFiles.length; i++) {
             let file = this.listFiles[i];
             let item = $(this.getItemPhotoHtml());
-            $('.file-item-display', item).attr('src', file.url);
+            $('.file-item-display', item).attr('src', file.url + '?rnd=' + getUnixTimestamp());
             $('.file-item-name', item).html(file.name);
             item.data('type', this.type);
             item.data('path', this.path);
@@ -142,9 +189,6 @@ FileManage.prototype.renderListFiles = function(list) {
             }
         }
     }
-    // else {
-    //     $('.list-file', this.fileManagerBox).append('<p class="text-center text-red">Thư mục chưa có ảnh. Bạn cần upload ảnh lên.</p>');
-    // }
 }
 
 FileManage.prototype.showBox = function() {
@@ -164,15 +208,13 @@ FileManage.prototype.renderMain = function() {
     html += '            <div class="row">';
     html += '               <div class="col-md-10"><div class="row list-file"></div></div>';
     html += '               <div class="col-md-2"><div class="file-item-info">';
-    html += '                   <h5>Thông tin tệp tin</h5>';
-    html += '                   <hr/>';
-    html += '                   <p><img class="img-responsive info-display" src="\/bundles\/tnqsoftmaterial\/img\/no-picture.png" height="120"></p>';
+    html += '                   <p><img class="img-responsive1 info-display" src="\/bundles\/tnqsoftmaterial\/img\/no-picture.png" height="120"></p>';
     html += '                   <p class="info-name"><strong>Tên</strong>: <span></span></p>';
     html += '                   <p class="info-extension"><strong>Phần mở rộng</strong>: <span></span></p>';
     html += '                   <p class="info-mime"><strong>Mime</strong>: <span></span></p>';
     html += '                   <p class="info-size"><strong>Độ lớn</strong>: <span></span></p>';
-    html += '                   <p class="info-width"><strong>Chiều dài</strong>: <span></span></p>';
-    html += '                   <p class="info-height"><strong>Chiều rộng</strong>: <span></span></p>';
+    html += '                   <p class="info-width"><strong>Chiều dài</strong>: <span></span>px</p>';
+    html += '                   <p class="info-height"><strong>Chiều cao</strong>: <span></span>px</p>';
     html += '                   <p class="info-isreadable"><strong>Được phép đọc</strong>: <span></span></p>';
     html += '                   <p class="info-iswritable"><strong>Được phép ghi</strong>: <span></span></p>';
     html += '                   <p class="info-modification"><strong>Ngày cập nhật</strong>: <span></span></p>';
@@ -208,23 +250,17 @@ FileManage.prototype.renderMain = function() {
 FileManage.prototype.getItemPhotoHtml = function() {
     let html = '';
     html += '<div class="col-xs-6 col-sm-3 col-md-4 col-lg-2 file-item">';
-    html += '    <div class="box box-default box-solid">';
-    html += '        <div class="box-body">';
-    html += '            <img class="img-responsive center-block file-item-display" src="/bundles/tnqsoftmaterial/img/no-picture.png" alt="Photo">';
-    html += '            <div class="text-center file-item-name"></div>';
+    html += '    <div class="thumbnail">';
+    html += '        <img class="img-responsive center-block file-item-display" src="/bundles/tnqsoftmaterial/img/no-picture.png" alt="Photo">';
+    html += '        <div class="caption text-center">';
+    html += '            <span class="file-item-name">Đang upload file...</span>';
+    html += '            <a href="#" class="btn-delete"><i class="fa fa-trash fa-lg"></i></a>';
+    html += '            <a href="#" class="btn-edit"><i class="fa fa-scissors fa-lg"></i></a>';
     html += '        </div>';
-    html += '        <div class="box-footer">';
-    html += '            <div class="row">';
-    html += '                <div class="col-md-6">';
-    html += '                    <a href="#" class="btn-delete text-red">';
-    html += '                        <i class="fa fa-trash"></i>';
-    html += '                        Xóa</a>';
-    html += '                </div>';
+    html += '        <div class="progress">';
+    html += '            <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%">';
+    html += '                <span class="sr-only">40% Complete (success)</span>';
     html += '            </div>';
-    html += '        </div>';
-    html += '        <div class="overlay">';
-    html += '          <i class="fa fa-refresh fa-spin"></i>';
-    html += '          <p class="text-center">Đang tải lên...<span class="uploaded-percent">10</span>%</p>';
     html += '        </div>';
     html += '    </div>';
     html += '    <i class="fa fa-check-circle fa-2x text-green file-item-selected"></i>';

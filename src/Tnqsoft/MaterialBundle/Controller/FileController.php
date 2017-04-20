@@ -92,12 +92,12 @@ class FileController extends Controller
         $baseDir = $this->getParameter('upload_tmp_dir');
         $basePath = $this->getParameter('upload_tmp_path');
         if ( $type !== null ) {
-            $baseDir = $this->getParameter($type.'_dir').(($path !== null)?$path.DIRECTORY_SEPARATOR:'');
-            $basePath = $this->getParameter($type.'_path').(($path !== null)?$path.'/':'');
+            $baseDir = $this->getParameter($type.'_dir').((!empty($path))?$path.DIRECTORY_SEPARATOR:'');
+            $basePath = $this->getParameter($type.'_path').((!empty($path))?$path.'/':'');
         }
 
         $validator = $this->get('tnqsoft_material.validator.file');
-        if ($request->isMethod('POST')) {
+        if ($request->isXmlHttpRequest() && $request->isMethod('POST')) {
             $file = $request->files->get('file');
             $input = array(
                 'file' => $file,
@@ -109,7 +109,7 @@ class FileController extends Controller
             $uploadProcess = $this->get('tnqsoft_material.process.upload');
             $uploadProcess->setBasePath($request->getSchemeAndHttpHost());
             try {
-                $fileItem = $uploadProcess->upload2($baseDir, $basePath);
+                $fileItem = $uploadProcess->upload($baseDir, $basePath);
 
                 $serializer = $this->get('jms_serializer');
                 $data = $serializer->serialize($fileItem, 'json', SerializationContext::create()->setSerializeNull(true));
@@ -124,15 +124,23 @@ class FileController extends Controller
     }
 
     /**
-     * @Route("/crop/{type}", requirements={"type" = "avatar|banner|hotel|area|news"}, name="api_file_crop")
-     * @Method({"POST"})
+     * @Route("/crop", name="api_file_crop")
+     * @Method({"PUT"})
      */
-    public function cropImageAction(Request $request, $type)
+    public function cropImageAction(Request $request)
     {
         //* @Security("has_role('ROLE_USER')")
         $path = $request->query->get('path');
+        $type = $request->query->get('type');
 
-        if ($request->isMethod('POST')) {
+        $baseDir = $this->getParameter('upload_tmp_dir');
+        $basePath = $this->getParameter('upload_tmp_path');
+        if ( $type !== null ) {
+            $baseDir = $this->getParameter($type.'_dir').((!empty($path))?$path.DIRECTORY_SEPARATOR:'');
+            $basePath = $this->getParameter($type.'_path').((!empty($path))?$path.'/':'');
+        }
+
+        if ($request->isXmlHttpRequest() && $request->isMethod('PUT')) {
             $data = $request->request->all();
             $x1 = floatval($request->request->get('x1'));
             $y1 = floatval($request->request->get('y1'));
@@ -143,12 +151,13 @@ class FileController extends Controller
             $pathParts = pathinfo($file);
 
             $uploadProcess = $this->get('tnqsoft_material.process.upload');
-            $uploadProcess->setBasePath($request->getSchemeAndHttpHost());
-            $uploadProcess->setCropDir($this->getParameter($type.'_dir').(($path !== null)?$path.DIRECTORY_SEPARATOR:''));
-            $uploadProcess->setCropPath($this->getParameter($type.'_path').(($path !== null)?$path.'/':''));
             try {
-                $info = $uploadProcess->cropImage($pathParts['basename'], $x1, $x2, $y1, $y2);
-                return new Response(json_encode($info), Response::HTTP_OK);
+                $fileItem = $uploadProcess->cropImage($baseDir, $basePath, $pathParts['basename'], $x1, $x2, $y1, $y2);
+
+                $serializer = $this->get('jms_serializer');
+                $data = $serializer->serialize($fileItem, 'json', SerializationContext::create()->setSerializeNull(true));
+                // Response client
+                return new Response($data, Response::HTTP_OK);
             } catch(\Exception $e) {
                 return new Response($e->getMessage(), Response::HTTP_NOT_IMPLEMENTED);
             }

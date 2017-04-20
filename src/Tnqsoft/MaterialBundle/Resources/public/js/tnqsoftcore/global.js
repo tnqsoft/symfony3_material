@@ -52,6 +52,10 @@ function formatFileSize(size) {
     return size;
 }
 
+function getUnixTimestamp() {
+    return moment().format('x');
+}
+
 $.fn.enterKey = function(fnc) {
     return this.each(function() {
         $(this).keypress(function(ev) {

@@ -36,7 +36,9 @@ FileManageUpload.prototype.onUploadChange = function(_this, e, data) {
 FileManageUpload.prototype.onUploadProgress = function(_this, e, data) {
     let progress = parseInt(data.loaded / data.total * 100, 10);
     let currentItem = $('.file-item', _this.fileManagerBox).filter(function(){ return $(this).data("uuid") == _this.currentItem});
-    $('.uploaded-percent', currentItem).html(progress);
+    $('.progress-bar', currentItem).css({
+        width: progress + '%'
+    }).attr('aria-valuenow', progress);
 };
 
 FileManageUpload.prototype.onUploadDone = function(_this, e, data) {
@@ -53,7 +55,11 @@ FileManageUpload.prototype.onUploadDone = function(_this, e, data) {
 };
 
 FileManageUpload.prototype.onUploadFail = function(_this, e, data) {
+    let currentItem = $('.file-item', _this.fileManagerBox).filter(function(){ return $(this).data("uuid") == _this.currentItem});
     let status = data.jqXHR.status
     let message = data.jqXHR.responseJSON.file;
-    console.log(message);
+    let popup = new B3Popup();
+    popup.alertBox('error', message);
+    _this.btnUpload.prop('disabled', false);
+    currentItem.remove();
 };
