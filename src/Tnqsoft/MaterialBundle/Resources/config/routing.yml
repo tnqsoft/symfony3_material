@@ -1,0 +1,17 @@
+tnqsoft_material_exception:
+    resource: "@TnqsoftMaterialBundle/Controller/ExceptionController.php"
+    type:     annotation
+    prefix:   /
+
+tnqsoft_material_api_file:
+    resource: "@TnqsoftMaterialBundle/Controller/FileController.php"
+    type:     annotation
+    prefix:   /api
+    options:
+        expose: true
+
+_bazinga_jstranslation:
+    resource: "@BazingaJsTranslationBundle/Resources/config/routing/routing.yml"
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

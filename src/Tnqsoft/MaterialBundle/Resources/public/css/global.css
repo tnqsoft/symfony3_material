@@ -1,0 +1,61 @@
+.file-item {
+    position: relative;
+}
+.file-item .box {
+    border: 1px solid #ddd;
+}
+.file-item .file-item-selected {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 5px;
+    background-color: #fff;
+}
+.file-item.active .box {
+    border-color: #00A65A;
+}
+.file-item.active .file-item-selected {
+    display: inline-block;
+}
+.file-item .box .overlay {
+    display: none;
+}
+.file-item.state-uploading .box .overlay {
+    display: block;
+}
+.file-item .file-item-display {
+    height: 90px;
+}
+.file-item .file-item-name {
+    height: 30px;
+    font-size: 11px;
+    margin-top: 5px;
+    overflow: hidden;
+}
+.file-item-info {
+    background-color: #F7F7F9;
+    padding: 20px;
+    font-size: 11px;
+}
+.file-item-info h5 {
+    margin: 0px;
+    padding: 0px;
+}
+.file-item-info hr {
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+#modalFileManager .modal-dialog {
+    width: 90%;
+}
+#modalFileManager .list-file {
+    height: 410px;
+    padding-top: 10px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+#modalFileManager .file-item-info {
+    height: 410px;
+    display: none;
+    overflow: hidden;
+}

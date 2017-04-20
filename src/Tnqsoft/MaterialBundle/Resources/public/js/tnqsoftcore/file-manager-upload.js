@@ -8,7 +8,7 @@ var FileManageUpload= function(fileManagerBox, itemHtml){
     this.fileManagerBox = fileManagerBox;
     this.itemHtml = itemHtml;
     this.currentItem = null;
-    let apiUpload = Routing.generate('api_file_upload_2', {
+    let apiUpload = Routing.generate('api_file_upload', {
         type: this.fileManagerBox.data('type'),
         path: this.fileManagerBox.data('path')
     });

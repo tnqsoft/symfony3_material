@@ -1,22 +1,26 @@
 body {
-    background: #d2d6de;
+    /*background: #d2d6de;*/
 }
 
 .error-box {
     padding: 40px;
-    border: 1px solid #eee;
-    width: 700px;
+    border: 1px solid #E65319;
+    border-top-width: 3px;
+    width: 1000px;
     max-width: 80%;
-    margin: 30px auto;
+    margin: 0px auto;
     word-wrap: break-word;
     background-color: #fff;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-    -webkit-box-shadow: -1px 0px 10px 0px rgba(0,0,0,0.48);
-    -moz-box-shadow: -1px 0px 10px 0px rgba(0,0,0,0.48);
-    box-shadow: -1px 0px 10px 0px rgba(0,0,0,0.48);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    /*-webkit-box-shadow: -1px 0px 5px 0px rgba(0,0,0,0.3);
+    -moz-box-shadow: -1px 0px 5px 0px rgba(0,0,0,0.3);
+    box-shadow: -1px 0px 5px 0px rgba(0,0,0,0.3);*/
+    margin-top: 5%;
 }
 .error-box h1 {
-    font-size: 3.5em;
+    font-size: 3em;
+    color: #E65319;
+    margin-bottom: 30px;
 }

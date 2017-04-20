@@ -1,16 +1,12 @@
-tnqsoft_material:
-    resource: "@TnqsoftMaterialBundle/Controller/"
+tnqsoft_demo:
+    resource: "@TnqsoftDemoBundle/Controller/"
     type:     annotation
+    prefix:   /demo
+
+tnqsoft_material:
+    resource: "@TnqsoftMaterialBundle/Resources/config/routing.yml"
     prefix:   /
-    options:
-        expose: true
 
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
-
-# _bazinga_jstranslation:
-#     resource: "@BazingaJsTranslationBundle/Resources/config/routing/routing.yml"
-#
-# fos_js_routing:
-#     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

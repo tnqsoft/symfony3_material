@@ -119,5 +119,6 @@ php bin/console doctrine:schema:update --force --env=dev
 php bin/console fos:js-routing:dump --env=dev
 
 #https://github.com/willdurand/BazingaJsTranslationBundle/blob/master/Resources/doc/index.md
-php app/console bazinga:js-translation:dump [target] [--format=js|json] [--merge-domains]
+php bin/console bazinga:js-translation:dump [target] [--format=js|json] [--merge-domains]
+php bin/console bazinga:js-translation:dump
 ```

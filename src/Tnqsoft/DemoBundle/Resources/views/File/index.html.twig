@@ -1,0 +1,89 @@
+{% extends 'TnqsoftDemoBundle:Layout:layout.html.twig' %}
+{##############################################################################}
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('bundles/tnqsoftmaterial/vendor/summernote/summernote.css') }}" type="text/css" media="all"/>
+<link rel="stylesheet" href="{{ asset('bundles/tnqsoftmaterial/vendor/jcrop/css/jquery.Jcrop.min.css') }}" type="text/css" media="all"/>
+<link rel="stylesheet" href="{{ asset('bundles/tnqsoftmaterial/css/global.css') }}" type="text/css" media="all"/>
+{% endblock %}
+{% block javascripts %}
+
+<script src="{{ asset('bundles/tnqsoftmaterial/vendor/jqueryFileUpload/js/vendor/jquery.ui.widget.js') }}"></script>
+<script src="{{ asset('bundles/tnqsoftmaterial/vendor/jqueryFileUpload/js/jquery.iframe-transport.js') }}"></script>
+<script src="{{ asset('bundles/tnqsoftmaterial/vendor/jqueryFileUpload/js/jquery.fileupload.js') }}"></script>
+<script src="{{ asset('bundles/tnqsoftmaterial/vendor/jcrop/js/jquery.Jcrop.min.js') }}"></script>
+<script src="{{ asset('bundles/tnqsoftmaterial/vendor/jcrop/js/jquery.color.js') }}"></script>
+
+<script src="{{ asset('bundles/tnqsoftmaterial/vendor/summernote/summernote.min.js') }}"></script>
+<script src="{{ asset('bundles/tnqsoftmaterial/vendor/summernote/lang/summernote-vi-VN.min.js') }}"></script>
+<script src="{{ asset('bundles/tnqsoftmaterial/plugins/summernote-ext-filemanager.js') }}"></script>
+
+<script src="{{ asset('bundles/tnqsoftmaterial/js/tnqsoftcore/global.js') }}"></script>
+<script src="{{ asset('bundles/tnqsoftmaterial/js/tnqsoftcore/crop-file.js') }}"></script>
+<script src="{{ asset('bundles/tnqsoftmaterial/js/tnqsoftcore/upload-file.js') }}"></script>
+<script src="{{ asset('bundles/tnqsoftmaterial/js/tnqsoftcore/popup.js') }}"></script>
+<script src="{{ asset('bundles/tnqsoftmaterial/js/tnqsoftcore/api-crud.js') }}"></script>
+<script src="{{ asset('bundles/tnqsoftmaterial/js/tnqsoftcore/file-manager-upload.js') }}"></script>
+<script src="{{ asset('bundles/tnqsoftmaterial/js/tnqsoftcore/file-manager.js') }}"></script>
+
+<script>
+    var fileManager = new FileManage('news', '');
+    $('.btn-upload').click(function(e){
+        e.preventDefault();
+        fileManager.selectedItems = [
+            $('#txtImg').val()
+        ];
+        fileManager.okCallback = function(file) {
+            $('#txtImg').val(file.name);
+            $('#displayImg').attr('src', file.url);
+        };
+        fileManager.showBox();
+    });
+    $('.btn-clear').click(function(e){
+        e.preventDefault();
+        $('#txtImg').val('');
+        $('#displayImg').attr('src', '{{ asset('bundles/tnqsoftmaterial/img/no-picture.png') }}');
+    });
+
+    $('.summernote').summernote({
+        lang: 'vi-VN',
+        minHeight: 300,
+        toolbar: [
+            ['nav', ['undo', 'redo']],
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['font', ['strikethrough', 'superscript', 'subscript']],
+            ['fontsize', ['fontname', 'fontsize']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph', 'height']],
+    	    ['Insert', ['table', 'hr', 'link', 'video', 'filemanager']],
+            ['tools', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+</script>
+{% endblock %}
+{##############################################################################}
+{% block body %}
+    <div class="page-header">
+        <h1>File Management
+            <small>Demo</small>
+        </h1>
+    </div>
+
+    <div class="demoBox">
+        <input type="hidden" id="txtImg" value=""/>
+        <p class="text-center"><img src="{{ asset('bundles/tnqsoftmaterial/img/no-picture.png') }}" id="displayImg" width="300"></p>
+        <p class="text-center">
+            <button type="button" class="btn btn-primary btn-upload">
+                <i class="fa fa-picture-o"></i>
+                Upload file
+            </button>
+            <button type="button" class="btn btn-danger btn-clear">
+                <i class="fa fa-times"></i>
+                Clear file
+            </button>
+        </p>
+    </div>
+
+    <div class="demoSummerNote">
+        <textarea class="summernote"></textarea>
+    </div>
+{% endblock %}

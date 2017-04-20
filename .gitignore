@@ -14,3 +14,11 @@
 !var/SymfonyRequirements.php
 /vendor/
 /web/bundles/
+/web/uploads/tmp/*
+!/web/uploads/tmp/.gitkeep
+/web/uploads/avatars/*
+!/web/uploads/avatars/.gitkeep
+/web/uploads/news/*
+!/web/uploads/news/.gitkeep
+/web/uploads/page/*
+!/web/uploads/page/.gitkeep

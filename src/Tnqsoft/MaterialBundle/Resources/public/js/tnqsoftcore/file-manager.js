@@ -82,15 +82,15 @@ FileManage.prototype.showInfo = function(item) {
     let isReadable = '';
     let isWritable = '';
     if (info.is_readable) {
-        isReadable = '<i class="fa fa-check text-green"></i>';
+        isReadable = '<i class="fa fa-check text-success"></i>';
     } else {
-        isReadable = '<i class="fa fa-times text-red"></i>';
+        isReadable = '<i class="fa fa-times text-danger"></i>';
     }
 
     if (info.is_writable) {
-        isWritable = '<i class="fa fa-check text-green"></i>';
+        isWritable = '<i class="fa fa-check text-success"></i>';
     } else {
-        isWritable = '<i class="fa fa-times text-red"></i>';
+        isWritable = '<i class="fa fa-times text-danger"></i>';
     }
     $('.info-display', infoBox).attr('src', info.url);
     $('.info-name span', infoBox).html(info.name);
@@ -166,7 +166,7 @@ FileManage.prototype.renderMain = function() {
     html += '               <div class="col-md-2"><div class="file-item-info">';
     html += '                   <h5>Thông tin tệp tin</h5>';
     html += '                   <hr/>';
-    html += '                   <p><img class="img-responsive info-display" src="\/common\/img\/no-picture.png" height="120"></p>';
+    html += '                   <p><img class="img-responsive info-display" src="\/bundles\/tnqsoftmaterial\/img\/no-picture.png" height="120"></p>';
     html += '                   <p class="info-name"><strong>Tên</strong>: <span></span></p>';
     html += '                   <p class="info-extension"><strong>Phần mở rộng</strong>: <span></span></p>';
     html += '                   <p class="info-mime"><strong>Mime</strong>: <span></span></p>';
@@ -210,7 +210,7 @@ FileManage.prototype.getItemPhotoHtml = function() {
     html += '<div class="col-xs-6 col-sm-3 col-md-4 col-lg-2 file-item">';
     html += '    <div class="box box-default box-solid">';
     html += '        <div class="box-body">';
-    html += '            <img class="img-responsive center-block file-item-display" src="/common/img/no-picture.png" alt="Photo">';
+    html += '            <img class="img-responsive center-block file-item-display" src="/bundles/tnqsoftmaterial/img/no-picture.png" alt="Photo">';
     html += '            <div class="text-center file-item-name"></div>';
     html += '        </div>';
     html += '        <div class="box-footer">';
