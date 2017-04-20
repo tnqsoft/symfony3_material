@@ -226,7 +226,7 @@ FileManage.prototype.renderMain = function() {
     html += '                <div class="col-xs-6 text-left">';
     html += '                    <button type="button" class="btn btn-success btn-upload">';
     html += '                        <i class="fa fa-cloud-upload"></i> Upload ảnh';
-    html += '                    </button>';
+    html += '                    </button> <span class="text-muted"> <i class="fa fa-mouse-pointer"></i> Hoặc là kéo thả file vào danh sách ảnh</span>';
     html += '                </div>';
     html += '                <div class="col-xs-6">';
     html += '                    <button type="button" class="btn btn-primary btn-ok">';

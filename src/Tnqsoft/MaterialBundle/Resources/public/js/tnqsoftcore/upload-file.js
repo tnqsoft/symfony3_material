@@ -15,6 +15,10 @@ var UploadFile = function(api, btnUpload) {
     this.bindAction();
 };
 
+UploadFile.prototype.onUploadAdd = function(_this, e, data) {
+    throw new Error("Abstract method!");
+};
+
 UploadFile.prototype.onUploadStart = function(_this, e) {
     throw new Error("Abstract method!");
 };
@@ -48,6 +52,9 @@ UploadFile.prototype.bindAction = function() {
         autoUpload: true,
         url: _this.api,
         type: 'POST',
+        add: function(e, data) {
+            _this.onUploadAdd(_this, e, data);
+        },
         change: function(e, data) {
             _this.onUploadChange(_this, e, data);
         },
@@ -62,7 +69,8 @@ UploadFile.prototype.bindAction = function() {
         },
         fail: function(e, data) {
             _this.onUploadFail(_this, e, data);
-        }
+        },
+        dropZone: $('.list-file')
     });
 
     this.btnUpload.click(function(e) {
