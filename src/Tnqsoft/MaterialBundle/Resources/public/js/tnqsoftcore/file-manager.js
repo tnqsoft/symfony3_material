@@ -138,7 +138,7 @@ FileManage.prototype.showInfo = function(item) {
     } else {
         isWritable = '<i class="fa fa-times text-danger"></i>';
     }
-    $('.info-display', infoBox).attr('src', info.url);
+    $('.info-display', infoBox).attr('src', info.url + '?rnd=' + getUnixTimestamp());
     $('.info-name span', infoBox).html(info.name);
     $('.info-extension span', infoBox).html(info.extension);
     $('.info-mime span', infoBox).html(info.mime);
@@ -226,7 +226,7 @@ FileManage.prototype.renderMain = function() {
     html += '                <div class="col-xs-6 text-left">';
     html += '                    <button type="button" class="btn btn-success btn-upload">';
     html += '                        <i class="fa fa-cloud-upload"></i> Upload ảnh';
-    html += '                    </button> <span class="text-muted"> <i class="fa fa-mouse-pointer"></i> Hoặc là kéo thả file vào danh sách ảnh</span>';
+    html += '                    </button> <span class="text-muted"> <i class="fa fa-mouse-pointer"></i> Hoặc là kéo thả nhiều file vào danh sách ảnh</span>';
     html += '                </div>';
     html += '                <div class="col-xs-6">';
     html += '                    <button type="button" class="btn btn-primary btn-ok">';

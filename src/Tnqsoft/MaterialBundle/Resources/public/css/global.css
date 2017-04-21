@@ -81,6 +81,7 @@
     padding-top: 10px;
     overflow-x: hidden;
     overflow-y: auto;
+    background: url(../img/drop-bg.png) no-repeat 50% 50%;
 }
 #modalFileManager .file-item-info {
     height: 410px;

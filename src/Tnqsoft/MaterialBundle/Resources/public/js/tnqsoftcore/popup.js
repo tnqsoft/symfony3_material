@@ -57,7 +57,7 @@ B3Popup.prototype.alertBox = function(type, msg, hiddenCallback) {
 
 B3Popup.prototype.init = function() {
     let html = '<div class="modal inmodal" id="modalDelete" tabindex="-1" role="dialog" aria-hidden="true">';
-    html += '    <div class="modal-dialog modal-small">';
+    html += '    <div class="modal-dialog modal-sm">';
     html += '        <div class="modal-content animated flipInY">';
     html += '            <div class="modal-header">';
     html += '                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Bỏ qua</span></button>';
