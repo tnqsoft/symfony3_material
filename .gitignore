@@ -22,3 +22,4 @@
 !/web/uploads/news/.gitkeep
 /web/uploads/page/*
 !/web/uploads/page/.gitkeep
+Gemfile.lock

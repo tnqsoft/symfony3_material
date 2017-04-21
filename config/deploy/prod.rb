@@ -2,7 +2,7 @@ set :stage, :prod
 set :symfony_env, "prod"
 
 #set :branch, 'master' # your production branch
-set :deploy_to, '/data/www/booking-room' # path on production server
+set :deploy_to, '/data/www/symfony3-material' # path on production server
 
 set :controllers_to_clear, ["app_*.php"]
 set :composer_install_flags, '--prefer-dist --no-interaction --optimize-autoloader'
