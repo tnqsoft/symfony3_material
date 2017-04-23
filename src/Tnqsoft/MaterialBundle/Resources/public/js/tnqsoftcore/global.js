@@ -1,3 +1,5 @@
+jQuery.migrateMute = false;
+
 /**
  * Created by nntuan on 9/11/2016.
  */

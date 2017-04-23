@@ -27,8 +27,8 @@ class FileController extends Controller
     {
         //* @Security("has_role('ROLE_USER')")
         $path = $request->query->get('path');
-        $dir = $this->getParameter($type.'_dir').(($path !== null)?$path.DIRECTORY_SEPARATOR:'');
-        $basePath = $this->getParameter($type.'_path').(($path !== null)?$path.'/':'');
+        $dir = $this->getParameter($type.'_dir').((!empty($path))?$path.DIRECTORY_SEPARATOR:'');
+        $basePath = $this->getParameter($type.'_path').((!empty($path))?$path.'/':'');
 
         $files = array();
         if (!is_dir($dir)) {
@@ -59,7 +59,7 @@ class FileController extends Controller
         if ($request->isXmlHttpRequest() && $request->isMethod('DELETE')) {
             $path = $request->query->get('path');
             $fileName = $request->query->get('file');
-            $dir = $this->getParameter($type.'_dir').(($path !== null)?$path.DIRECTORY_SEPARATOR:'');
+            $dir = $this->getParameter($type.'_dir').((!empty($path))?$path.DIRECTORY_SEPARATOR:'');
 
             if (!is_dir($dir) || !file_exists($dir.$fileName) ) {
                 return $this->json(array('error' => 'Không tồn tại file cần xóa'), Response::HTTP_NOT_FOUND);
@@ -107,6 +107,7 @@ class FileController extends Controller
             }
 
             $uploadProcess = $this->get('tnqsoft_material.process.upload');
+            $uploadProcess->setAllowList(array('image/*', 'application/pdf'));
             $uploadProcess->setBasePath($request->getSchemeAndHttpHost());
             try {
                 $fileItem = $uploadProcess->upload($baseDir, $basePath);

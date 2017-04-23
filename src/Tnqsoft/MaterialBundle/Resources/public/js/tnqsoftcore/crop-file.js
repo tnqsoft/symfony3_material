@@ -7,14 +7,14 @@ var CropFile = function(api, options) {
     this.api = api;
     this.onCropSuccess = $.noop;
     this.onCropError = $.noop;
-    // {
-    //     title: 'Cắt tỉa ảnh',
-    //     imgDefault: 'http://example.com/no-picture.jpg',
-    //     btnOkText: 'Cắt ảnh và hoàn tất',
-    //     btnCancelText: 'Bỏ qua',
-    //     aspectRatio: 1
-    // }
-    this.options = options;
+    let defaultsOption = {
+        title: 'Cắt tỉa ảnh',
+        imgDefault: '/bundles/tnqsoftmaterial/img/no-picture.png',
+        btnOkText: 'Cắt ảnh',
+        btnCancelText: 'Bỏ qua',
+        aspectRatio: null
+    };
+    this.options = $.extend(defaultsOption, options);
     this.cropImgApi = null;
 
     this.init();
@@ -29,12 +29,10 @@ CropFile.prototype.init = function() {
     html += '<div class="modal-dialog modal-small">';
     html += '    <div class="modal-content animated flipInY">';
     html += '        <div class="modal-header">';
-    html += '            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Bỏ qua</span></button>';
+    html += '            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">' + this.options.btnCancelText + '</span></button>';
     html += '            <h4 class="modal-title">' + this.options.title + '</h4>';
     html += '        </div>';
-    html += '        <div class="modal-body center">';
-    // html += '            <img src="' + this.options.imgDefault + '" id="cropImg" alt="Jcrop Image" width="570"/>';
-    html += '        </div>';
+    html += '        <div class="modal-body center"></div>';
     html += '        <div class="modal-footer">';
     html += '           <div class="row">';
     html += '               <div class="col-xs-6 text-left">';
@@ -49,6 +47,9 @@ CropFile.prototype.init = function() {
     html += '               <div class="col-xs-6">';
     html += '                   <button type="button" class="btn btn-success btn-confirm-crop">';
     html += '                       <i class="fa fa-check"></i>' + this.options.btnOkText;
+    html += '                   </button>';
+    html += '                   <button type="button" class="btn btn-default btn-cancel" data-dismiss="modal">';
+    html += '                       <i class="fa fa-times"></i>' + this.options.btnCancelText;
     html += '                   </button>';
     html += '               </div>';
     html += '           </div>';
@@ -134,7 +135,6 @@ CropFile.prototype.changeRatio = function(ratioType) {
         ratio = null;
         break;
     }
-    console.log(this.cropImgApi);
     this.cropImgApi.setOptions({
       aspectRatio: ratio
     });

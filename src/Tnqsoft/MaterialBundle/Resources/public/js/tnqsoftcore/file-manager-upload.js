@@ -22,11 +22,9 @@ FileManageUpload.prototype.parent = UploadFile.prototype;
 FileManageUpload.prototype.onUploadAdd = function(_this, e, data) {
     for (var i = 0; i < data.files.length; i++) {
         _this.btnUpload.prop('disabled', true);
-        let uuid = md5(data.files[i].name + '' + data.files[i].lastModified + '' + data.files[i].size);//generateUUID();
-        console.log(uuid);
+        let uuid = md5(data.files[i].name + '' + data.files[i].lastModified + '' + data.files[i].size);
         let item = $(_this.itemHtml);
         item.data('uuid', uuid);
-        //_this.currentItem = uuid;
         item.addClass('state-uploading');
         $('.list-file', _this.fileManagerBox).append(item);
     }
@@ -63,7 +61,11 @@ FileManageUpload.prototype.onUploadDone = function(_this, e, data) {
         let uuid = md5(data.files[i].name + '' + data.files[i].lastModified + '' + data.files[i].size);//generateUUID();
         let file = data.jqXHR.responseJSON;
         let currentItem = $('.file-item', _this.fileManagerBox).filter(function(){ return $(this).data("uuid") == uuid});
-        $('.file-item-display', currentItem).attr('src', file.url);
+        if (file.is_image === true) {
+            $('.file-item-display', currentItem).attr('src', file.url);
+        } else {
+            $('.btn-edit', currentItem).remove();
+        }
         $('.file-item-name', currentItem).html(file.name);
         currentItem.data('uuid', generateUUID());
         currentItem.data('type', _this.fileManagerBox.data('type'));

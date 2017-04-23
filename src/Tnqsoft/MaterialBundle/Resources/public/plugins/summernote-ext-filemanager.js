@@ -40,7 +40,15 @@
             //       var fileManager = new FileManage($('#fileManagerType').val(), $('#fileManagerPath').val());
             //   }
               fileManager.okCallback = function(file) {
-                  context.invoke('editor.insertImage', file.url, file.name);
+                  if (file.is_image === true) {
+                    context.invoke('editor.insertImage', file.url, file.name);
+                  } else {
+                    context.invoke('createLink', {
+                        text: file.name,
+                        url: window.location.origin + file.url,
+                        isNewWindow: true
+                    });
+                  }
               };
               fileManager.showBox();
           }

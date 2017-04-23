@@ -58,6 +58,7 @@ class FileItem
      * @var boolean
      *
      * @Type("boolean")
+     * @SerializedName("is_readable")
      * @Expose
      */
     private $isReadable;
@@ -66,6 +67,16 @@ class FileItem
      * @var boolean
      *
      * @Type("boolean")
+     * @SerializedName("is_image")
+     * @Expose
+     */
+    private $isImage;
+
+    /**
+     * @var boolean
+     *
+     * @Type("boolean")
+     * @SerializedName("is_writable")
      * @Expose
      */
     private $isWritable;
@@ -134,7 +145,8 @@ class FileItem
         $this->baseDir = $pathParts['dirname'];
         $this->extension = $pathParts['extension'];
         $this->size = filesize($this->path);
-        if ($this->isImage($this->path)) {
+        $this->isImage = $this->checkIsImage($this->path);
+        if ($this->isImage) {
             list($this->width, $this->height) = getimagesize($this->path);
         }
         $this->mime = mime_content_type($this->path);
@@ -145,12 +157,12 @@ class FileItem
     }
 
     /**
-     * Is Image
+     * Check Is Image
      *
      * @param  string  $filename
      * @return boolean
      */
-    protected function isImage($filename)
+    protected function checkIsImage($filename)
     {
         $validFormats = array(IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_GIF, IMAGETYPE_BMP);
         $fileFormat = exif_imagetype($filename);
@@ -470,4 +482,28 @@ class FileItem
         return $this;
     }
 
+
+    /**
+     * Get the value of Is Image
+     *
+     * @return boolean
+     */
+    public function getIsImage()
+    {
+        return $this->isImage;
+    }
+
+    /**
+     * Set the value of Is Image
+     *
+     * @param boolean isImage
+     *
+     * @return self
+     */
+    public function setIsImage($isImage)
+    {
+        $this->isImage = $isImage;
+
+        return $this;
+    }
 }

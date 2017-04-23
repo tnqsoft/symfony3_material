@@ -68,20 +68,13 @@ FileManage.prototype.bindAction = function() {
 
 FileManage.prototype.cropFile = function(item) {
     var _parent = this;
-    let options = {
-        title: 'Cắt tỉa ảnh',
-        imgDefault: '/bundles/tnqsoftmaterial/img/no-picture.png',
-        btnOkText: 'Cắt ảnh',
-        btnCancelText: 'Lưu luôn ảnh',
-        aspectRatio: null
-    };
     let info = JSON.parse(item.data('context'));
     let apiCrop = Routing.generate('api_file_crop', {
         type: item.data('type'),
         path: item.data('path')
         // file: item.data('file')
     });
-    let cropFile = new CropFile(apiCrop, options);
+    let cropFile = new CropFile(apiCrop);
     cropFile.setOnCropSuccess(function(_this, file){
         $('.file-item-display', item).attr('src', file.url + '?rnd=' + getUnixTimestamp());
         $('.file-item-name', item).html(file.name);
@@ -90,7 +83,8 @@ FileManage.prototype.cropFile = function(item) {
         _parent.showInfo(item);
     });
     cropFile.setOnCropError(function(_this, error){
-        console.log(error);
+        let popup = new B3Popup();
+        popup.alertBox('error', error);
     });
     cropFile.showCropModal(info.url, info.width, info.height);
 };
@@ -106,6 +100,7 @@ FileManage.prototype.loadList = function() {
     let _this = this;
     $('.list-file', this.fileManagerBox).empty();
     $('.file-item-info', this.fileManagerBox).hide();
+    $('.icon-loading', this.fileManagerBox).show();
     let listApi = Routing.generate('api_file_list', {
         type: this.type,
         path: this.path,
@@ -115,6 +110,7 @@ FileManage.prototype.loadList = function() {
         .done(function(list) {
             _this.listFiles = list;
             _this.renderListFiles();
+            $('.icon-loading', _this.fileManagerBox).hide();    
         })
         .fail(function(error) {
             let popup = new B3Popup();
@@ -138,7 +134,12 @@ FileManage.prototype.showInfo = function(item) {
     } else {
         isWritable = '<i class="fa fa-times text-danger"></i>';
     }
-    $('.info-display', infoBox).attr('src', info.url + '?rnd=' + getUnixTimestamp());
+    if (info.is_image === true) {
+        $('.info-display', infoBox).attr('src', info.url + '?rnd=' + getUnixTimestamp());
+    } else {
+        $('.info-display', infoBox).attr('src', '/bundles/tnqsoftmaterial/img/file.png');
+    }
+
     $('.info-name span', infoBox).html(info.name);
     $('.info-extension span', infoBox).html(info.extension);
     $('.info-mime span', infoBox).html(info.mime);
@@ -174,7 +175,11 @@ FileManage.prototype.renderListFiles = function(list) {
         for (let i = 0; i < this.listFiles.length; i++) {
             let file = this.listFiles[i];
             let item = $(this.getItemPhotoHtml());
-            $('.file-item-display', item).attr('src', file.url + '?rnd=' + getUnixTimestamp());
+            if (file.is_image === true) {
+                $('.file-item-display', item).attr('src', file.url + '?rnd=' + getUnixTimestamp());
+            } else {
+                $('.btn-edit', item).remove();
+            }
             $('.file-item-name', item).html(file.name);
             item.data('type', this.type);
             item.data('path', this.path);
@@ -202,13 +207,13 @@ FileManage.prototype.renderMain = function() {
     html += '    <div class="modal-content animated flipInY">';
     html += '        <div class="modal-header">';
     html += '            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Bỏ qua</span></button>';
-    html += '            <h4 class="modal-title">Quản lý thư viện ảnh</h4>';
+    html += '            <h4 class="modal-title">Quản lý file <i class="fa fa-circle-o-notch fa-spin fa-fw icon-loading"></i></h4>';
     html += '        </div>';
     html += '        <div class="modal-body form-group-box">';
     html += '            <div class="row">';
     html += '               <div class="col-md-10"><div class="row list-file"></div></div>';
     html += '               <div class="col-md-2"><div class="file-item-info">';
-    html += '                   <p><img class="img-responsive1 info-display" src="\/bundles\/tnqsoftmaterial\/img\/no-picture.png" height="120"></p>';
+    html += '                   <p><img class="img-responsive1 info-display" src="\/bundles\/tnqsoftmaterial\/img\/file.png"></p>';
     html += '                   <p class="info-name"><strong>Tên</strong>: <span></span></p>';
     html += '                   <p class="info-extension"><strong>Phần mở rộng</strong>: <span></span></p>';
     html += '                   <p class="info-mime"><strong>Mime</strong>: <span></span></p>';
@@ -225,12 +230,12 @@ FileManage.prototype.renderMain = function() {
     html += '            <div class="row">';
     html += '                <div class="col-xs-6 text-left">';
     html += '                    <button type="button" class="btn btn-success btn-upload">';
-    html += '                        <i class="fa fa-cloud-upload"></i> Upload ảnh';
-    html += '                    </button> <span class="text-muted"> <i class="fa fa-mouse-pointer"></i> Hoặc là kéo thả nhiều file vào danh sách ảnh</span>';
+    html += '                        <i class="fa fa-cloud-upload"></i> Upload file';
+    html += '                    </button> <span class="text-muted"> <i class="fa fa-mouse-pointer"></i> Hoặc là kéo thả nhiều file vào danh sách file</span>';
     html += '                </div>';
     html += '                <div class="col-xs-6">';
     html += '                    <button type="button" class="btn btn-primary btn-ok">';
-    html += '                        <i class="fa fa-check"></i> Chọn ảnh';
+    html += '                        <i class="fa fa-check"></i> Chọn file';
     html += '                    </button>';
     html += '                </div>';
     html += '            </div>';
@@ -251,7 +256,7 @@ FileManage.prototype.getItemPhotoHtml = function() {
     let html = '';
     html += '<div class="col-xs-6 col-sm-3 col-md-4 col-lg-2 file-item">';
     html += '    <div class="thumbnail">';
-    html += '        <img class="img-responsive center-block file-item-display" src="/bundles/tnqsoftmaterial/img/no-picture.png" alt="Photo">';
+    html += '        <img class="img-responsive center-block file-item-display" src="/bundles/tnqsoftmaterial/img/file.png" alt="Photo">';
     html += '        <div class="caption text-center">';
     html += '            <span class="file-item-name">Đang upload file...</span>';
     html += '            <a href="#" class="btn-delete"><i class="fa fa-trash fa-lg"></i></a>';
