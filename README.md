@@ -121,4 +121,9 @@ php bin/console fos:js-routing:dump --env=dev
 #https://github.com/willdurand/BazingaJsTranslationBundle/blob/master/Resources/doc/index.md
 php bin/console bazinga:js-translation:dump [target] [--format=js|json] [--merge-domains]
 php bin/console bazinga:js-translation:dump
+
+# Generate Entity From Database
+php bin/console doctrine:mapping:import --force TnqsoftDemoBundle xml
+php bin/console doctrine:mapping:convert annotation ./src
+php bin/console doctrine:generate:entities TnqsoftDemoBundle
 ```
