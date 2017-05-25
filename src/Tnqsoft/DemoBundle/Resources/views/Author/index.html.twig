@@ -11,6 +11,15 @@
         </h1>
     </div>
 
+    <p>
+        {{ link_button({
+            'text': 'Add New',
+            'href': path('admin_author_new'),
+            'class': 'success',
+            'icon': 'plus',
+        }) }}
+    </p>
+
     {{ table_start({ id: 'tableDemo' }) }}
         <thead>
             <tr class="info">
@@ -31,13 +40,21 @@
                 <td>{% if record.createdAt %}{{ record.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{% if record.updatedAt %}{{ record.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{{ record.id }}</td>
-                <td>
-                    <a href="#" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Chi tiết">
-                        <i class="fa fa-eye"></i>
-                    </a>
-                    <a href="#" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Sửa">
-                        <i class="fa fa-pencil"></i>
-                    </a>
+                <td>                    
+                    {{ link_button({
+                        'text': '',
+                        'href': path('admin_author_show', { 'id': record.id }),
+                        'class': 'primary',
+                        'icon': 'eye',
+                        'attr': 'data-toggle="tooltip" data-placement="top" title="Detail"'
+                    }) }}
+                    {{ link_button({
+                        'text': '',
+                        'href': path('admin_author_edit', { 'id': record.id }),
+                        'class': 'info',
+                        'icon': 'pencil',
+                        'attr': 'data-toggle="tooltip" data-placement="top" title="Edit"'
+                    }) }}
                 </td>
             </tr>
         {% endfor %}

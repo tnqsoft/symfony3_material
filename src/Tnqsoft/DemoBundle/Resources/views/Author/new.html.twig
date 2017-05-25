@@ -1,0 +1,18 @@
+{% extends 'TnqsoftDemoBundle:Layout:layout.html.twig' %}
+{##############################################################################}
+{% block javascripts %}
+<script src="{{ asset('bundles/tnqsoftdemo/js/script.js') }}"></script>
+{% endblock %}
+{##############################################################################}
+{% block body %}
+    <div class="page-header">
+        <h1>Author
+            <small>Create</small>
+        </h1>
+    </div>
+
+    {% include 'TnqsoftDemoBundle:Author:form.html.twig' with {
+        'form': form,
+    } %}
+
+{% endblock %}

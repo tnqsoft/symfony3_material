@@ -1,0 +1,59 @@
+{# TABLE #}
+{% block start %}
+    <table
+        class="table table-striped table-bordered table-hover {% if class is defined %}{{ class }}{% endif %}"
+        {% if id is defined %}id="{{ id }}"{% endif %}
+        {% if attr is defined %}id="{{ attr|raw }}"{% endif %}
+    >
+{% endblock %}
+{#----------------------------------------------------------#}
+{% block end %}
+</table>
+{% endblock %}
+{#----------------------------------------------------------#}
+{% block thead %}
+
+{% endblock %}
+{#----------------------------------------------------------#}
+{% block tbody %}
+
+{% endblock %}
+{#----------------------------------------------------------#}
+
+{# BUTTON #}
+{% block button %}
+    <button
+        type="{{ type }}"
+        class="btn btn-{{ class }}"
+        {% if id is defined %}id="{{ id }}"{% endif %}
+        {% if attr is defined %}{{ attr|raw }}{% endif %}
+    >
+        {% if icon is defined %}<i class="fa fa-{{ icon }}"></i>{% endif %}
+        {{ text }}
+    </button>
+{% endblock %}
+
+{% block linkButton %}
+    <a
+        href="{{ href }}"
+        class="btn btn-{{ class }}"
+        {% if id is defined %}id="{{ id }}"{% endif %}
+        {% if attr is defined %}{{ attr|raw }}{% endif %}
+    >
+        {% if icon is defined %}
+            <i class="fa fa-{{ icon }}"></i>
+        {% endif %}
+        {{ text }}
+    </a>
+{% endblock %}
+{#----------------------------------------------------------#}
+
+{# ICON #}
+{% block icon %}
+<i
+    class="fa fa-{{ icon }}"
+    {% if id is defined %}id="{{ id }}"{% endif %}
+    {% if attr is defined %}{{ attr|raw }}{% endif %}
+></i>
+{% endblock %}
+{#----------------------------------------------------------#}

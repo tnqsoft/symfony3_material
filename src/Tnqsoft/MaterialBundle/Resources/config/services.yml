@@ -11,12 +11,19 @@ services:
         tags:
             - { name: twig.extension }
 
-    tnqsoft_material.twig.extension.table:
-        class: Tnqsoft\MaterialBundle\Twig\Extension\TableExtension
+    tnqsoft_material.twig.extension.element:
+        class: Tnqsoft\MaterialBundle\Twig\Extension\ElementExtension
         public: false
-        arguments: ['@twig']
+        arguments: ['@twig', 'TnqsoftMaterialBundle:Common:element.html.twig']
         tags:
-            - { name: twig.extension }
+            - { name: twig.extension, alias: element_extension }
+
+    tnqsoft_material.twig.extension.routing:
+        class: Tnqsoft\MaterialBundle\Twig\Extension\RoutingExtension
+        public: false
+        arguments:
+            - '@router'
+            - '@request_stack'
 
     tnqsoft_material.service.email:
         class: Tnqsoft\MaterialBundle\Service\Email
