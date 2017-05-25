@@ -7,11 +7,18 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Category
  *
- * @ORM\Table(name="tbl_category")
+ * @ORM\Table(name="tbl_category", uniqueConstraints={@ORM\UniqueConstraint(name="slug_idx", columns={"slug"})})
  * @ORM\Entity
  */
 class Category
 {
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="parent_id", type="integer", nullable=true)
+     */
+    private $parentId;
+
     /**
      * @var string
      *
@@ -22,9 +29,16 @@ class Category
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text", nullable=true)
+     * @ORM\Column(name="slug", type="string", length=255, nullable=false)
      */
-    private $description;
+    private $slug;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_active", type="boolean", nullable=false)
+     */
+    private $isActive = '1';
 
     /**
      * @var \DateTime
@@ -49,14 +63,52 @@ class Category
      */
     private $id;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Tnqsoft\DemoBundle\Entity\News", mappedBy="category")
+     */
+    private $news;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->news = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+
+    /**
+     * Set parentId
+     *
+     * @param integer $parentId
+     *
+     * @return Category
+     */
+    public function setParentId($parentId)
+    {
+        $this->parentId = $parentId;
+
+        return $this;
+    }
+
+    /**
+     * Get parentId
+     *
+     * @return integer
+     */
+    public function getParentId()
+    {
+        return $this->parentId;
+    }
 
     /**
      * Set title
      *
      * @param string $title
      *
-     * @return TblCategory
+     * @return Category
      */
     public function setTitle($title)
     {
@@ -76,27 +128,51 @@ class Category
     }
 
     /**
-     * Set description
+     * Set slug
      *
-     * @param string $description
+     * @param string $slug
      *
-     * @return TblCategory
+     * @return Category
      */
-    public function setDescription($description)
+    public function setSlug($slug)
     {
-        $this->description = $description;
+        $this->slug = $slug;
 
         return $this;
     }
 
     /**
-     * Get description
+     * Get slug
      *
      * @return string
      */
-    public function getDescription()
+    public function getSlug()
     {
-        return $this->description;
+        return $this->slug;
+    }
+
+    /**
+     * Set isActive
+     *
+     * @param boolean $isActive
+     *
+     * @return Category
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
     }
 
     /**
@@ -104,7 +180,7 @@ class Category
      *
      * @param \DateTime $createdAt
      *
-     * @return TblCategory
+     * @return Category
      */
     public function setCreatedAt($createdAt)
     {
@@ -128,7 +204,7 @@ class Category
      *
      * @param \DateTime $updatedAt
      *
-     * @return TblCategory
+     * @return Category
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -155,5 +231,39 @@ class Category
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Add news
+     *
+     * @param News $news
+     *
+     * @return Category
+     */
+    public function addNews(News $news)
+    {
+        $this->news[] = $news;
+
+        return $this;
+    }
+
+    /**
+     * Remove news
+     *
+     * @param News $news
+     */
+    public function removeNews(News $news)
+    {
+        $this->news->removeElement($news);
+    }
+
+    /**
+     * Get news
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getNews()
+    {
+        return $this->news;
     }
 }

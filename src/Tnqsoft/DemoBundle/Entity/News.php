@@ -7,25 +7,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * News
  *
- * @ORM\Table(name="tbl_news")
+ * @ORM\Table(name="tbl_news", uniqueConstraints={@ORM\UniqueConstraint(name="slug_idx", columns={"slug"})}, indexes={@ORM\Index(name="author_id", columns={"author_id"})})
  * @ORM\Entity
  */
 class News
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="category_id", type="integer", nullable=true)
-     */
-    private $categoryId;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="author_id", type="datetime", nullable=true)
-     */
-    private $authorId;
-
     /**
      * @var string
      *
@@ -43,7 +29,7 @@ class News
     /**
      * @var string
      *
-     * @ORM\Column(name="summary", type="text", nullable=true)
+     * @ORM\Column(name="summary", type="text", length=16777215, nullable=false)
      */
     private $summary;
 
@@ -62,53 +48,18 @@ class News
     private $thumb;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="expired_at", type="datetime", nullable=true)
-     */
-    private $expiredAt;
-
-    /**
      * @var string
      *
-     * @ORM\Column(name="test_color", type="string", length=255, nullable=true)
+     * @ORM\Column(name="folder_images", type="string", length=255, nullable=true)
      */
-    private $testColor;
+    private $folderImages;
 
     /**
-     * @var \DateTime
+     * @var boolean
      *
-     * @ORM\Column(name="test_time", type="time", nullable=true)
+     * @ORM\Column(name="is_active", type="boolean", nullable=true)
      */
-    private $testTime;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="test_autocomplete", type="integer", nullable=true)
-     */
-    private $testAutocomplete;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="test_map_latitude", type="decimal", precision=10, scale=0, nullable=true)
-     */
-    private $testMapLatitude;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="test_map_longitude", type="decimal", precision=10, scale=0, nullable=true)
-     */
-    private $testMapLongitude;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="test_suggesstion", type="string", length=255, nullable=true)
-     */
-    private $testSuggesstion;
+    private $isActive = '1';
 
     /**
      * @var \DateTime
@@ -125,63 +76,54 @@ class News
     private $updatedAt;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="tags", type="text", length=65535, nullable=true)
+     */
+    private $tags;
+
+    /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="id", type="bigint")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
-
+    /**
+     * @var Author
+     *
+     * @ORM\ManyToOne(targetEntity="Tnqsoft\DemoBundle\Entity\Author")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="author_id", referencedColumnName="id")
+     * })
+     */
+    private $author;
 
     /**
-     * Set categoryId
+     * @var \Doctrine\Common\Collections\Collection
      *
-     * @param integer $categoryId
-     *
-     * @return TblNews
+     * @ORM\ManyToMany(targetEntity="Tnqsoft\DemoBundle\Entity\Category", inversedBy="news")
+     * @ORM\JoinTable(name="tbl_news_category",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="news_id", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     *   }
+     * )
      */
-    public function setCategoryId($categoryId)
-    {
-        $this->categoryId = $categoryId;
-
-        return $this;
-    }
+    private $category;
 
     /**
-     * Get categoryId
-     *
-     * @return integer
+     * Constructor
      */
-    public function getCategoryId()
+    public function __construct()
     {
-        return $this->categoryId;
+        $this->category = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    /**
-     * Set authorId
-     *
-     * @param \DateTime $authorId
-     *
-     * @return TblNews
-     */
-    public function setAuthorId($authorId)
-    {
-        $this->authorId = $authorId;
-
-        return $this;
-    }
-
-    /**
-     * Get authorId
-     *
-     * @return \DateTime
-     */
-    public function getAuthorId()
-    {
-        return $this->authorId;
-    }
 
     /**
      * Set title
@@ -304,171 +246,51 @@ class News
     }
 
     /**
-     * Set expiredAt
+     * Set folderImages
      *
-     * @param \DateTime $expiredAt
+     * @param string $folderImages
      *
      * @return TblNews
      */
-    public function setExpiredAt($expiredAt)
+    public function setFolderImages($folderImages)
     {
-        $this->expiredAt = $expiredAt;
+        $this->folderImages = $folderImages;
 
         return $this;
     }
 
     /**
-     * Get expiredAt
-     *
-     * @return \DateTime
-     */
-    public function getExpiredAt()
-    {
-        return $this->expiredAt;
-    }
-
-    /**
-     * Set testColor
-     *
-     * @param string $testColor
-     *
-     * @return TblNews
-     */
-    public function setTestColor($testColor)
-    {
-        $this->testColor = $testColor;
-
-        return $this;
-    }
-
-    /**
-     * Get testColor
+     * Get folderImages
      *
      * @return string
      */
-    public function getTestColor()
+    public function getFolderImages()
     {
-        return $this->testColor;
+        return $this->folderImages;
     }
 
     /**
-     * Set testTime
+     * Set isActive
      *
-     * @param \DateTime $testTime
+     * @param boolean $isActive
      *
      * @return TblNews
      */
-    public function setTestTime($testTime)
+    public function setIsActive($isActive)
     {
-        $this->testTime = $testTime;
+        $this->isActive = $isActive;
 
         return $this;
     }
 
     /**
-     * Get testTime
+     * Get isActive
      *
-     * @return \DateTime
+     * @return boolean
      */
-    public function getTestTime()
+    public function getIsActive()
     {
-        return $this->testTime;
-    }
-
-    /**
-     * Set testAutocomplete
-     *
-     * @param integer $testAutocomplete
-     *
-     * @return TblNews
-     */
-    public function setTestAutocomplete($testAutocomplete)
-    {
-        $this->testAutocomplete = $testAutocomplete;
-
-        return $this;
-    }
-
-    /**
-     * Get testAutocomplete
-     *
-     * @return integer
-     */
-    public function getTestAutocomplete()
-    {
-        return $this->testAutocomplete;
-    }
-
-    /**
-     * Set testMapLatitude
-     *
-     * @param string $testMapLatitude
-     *
-     * @return TblNews
-     */
-    public function setTestMapLatitude($testMapLatitude)
-    {
-        $this->testMapLatitude = $testMapLatitude;
-
-        return $this;
-    }
-
-    /**
-     * Get testMapLatitude
-     *
-     * @return string
-     */
-    public function getTestMapLatitude()
-    {
-        return $this->testMapLatitude;
-    }
-
-    /**
-     * Set testMapLongitude
-     *
-     * @param string $testMapLongitude
-     *
-     * @return TblNews
-     */
-    public function setTestMapLongitude($testMapLongitude)
-    {
-        $this->testMapLongitude = $testMapLongitude;
-
-        return $this;
-    }
-
-    /**
-     * Get testMapLongitude
-     *
-     * @return string
-     */
-    public function getTestMapLongitude()
-    {
-        return $this->testMapLongitude;
-    }
-
-    /**
-     * Set testSuggesstion
-     *
-     * @param string $testSuggesstion
-     *
-     * @return TblNews
-     */
-    public function setTestSuggesstion($testSuggesstion)
-    {
-        $this->testSuggesstion = $testSuggesstion;
-
-        return $this;
-    }
-
-    /**
-     * Get testSuggesstion
-     *
-     * @return string
-     */
-    public function getTestSuggesstion()
-    {
-        return $this->testSuggesstion;
+        return $this->isActive;
     }
 
     /**
@@ -520,6 +342,30 @@ class News
     }
 
     /**
+     * Set tags
+     *
+     * @param string $tags
+     *
+     * @return TblNews
+     */
+    public function setTags($tags)
+    {
+        $this->tags = $tags;
+
+        return $this;
+    }
+
+    /**
+     * Get tags
+     *
+     * @return string
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -527,5 +373,63 @@ class News
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set author
+     *
+     * @param Author $author
+     *
+     * @return TblNews
+     */
+    public function setAuthor(Author $author = null)
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * Get author
+     *
+     * @return Author
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * Add category
+     *
+     * @param Category $category
+     *
+     * @return TblNews
+     */
+    public function addCategory(Category $category)
+    {
+        $this->category[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param Category $category
+     */
+    public function removeCategory(Category $category)
+    {
+        $this->category->removeElement($category);
+    }
+
+    /**
+     * Get category
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 }

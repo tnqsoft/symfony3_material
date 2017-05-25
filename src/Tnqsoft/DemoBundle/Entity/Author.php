@@ -15,9 +15,16 @@ class Author
     /**
      * @var string
      *
-     * @ORM\Column(name="fullname", type="string", length=255, nullable=false)
+     * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
-    private $fullname;
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", length=65535, nullable=true)
+     */
+    private $description;
 
     /**
      * @var \DateTime
@@ -45,27 +52,51 @@ class Author
 
 
     /**
-     * Set fullname
+     * Set name
      *
-     * @param string $fullname
+     * @param string $name
      *
-     * @return TblAuthor
+     * @return Author
      */
-    public function setFullname($fullname)
+    public function setName($name)
     {
-        $this->fullname = $fullname;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get fullname
+     * Get name
      *
      * @return string
      */
-    public function getFullname()
+    public function getName()
     {
-        return $this->fullname;
+        return $this->name;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Author
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 
     /**
@@ -73,7 +104,7 @@ class Author
      *
      * @param \DateTime $createdAt
      *
-     * @return TblAuthor
+     * @return Author
      */
     public function setCreatedAt($createdAt)
     {
@@ -97,7 +128,7 @@ class Author
      *
      * @param \DateTime $updatedAt
      *
-     * @return TblAuthor
+     * @return Author
      */
     public function setUpdatedAt($updatedAt)
     {
