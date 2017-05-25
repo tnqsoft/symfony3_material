@@ -11,6 +11,13 @@ services:
         tags:
             - { name: twig.extension }
 
+    tnqsoft_material.twig.extension.table:
+        class: Tnqsoft\MaterialBundle\Twig\Extension\TableExtension
+        public: false
+        arguments: ['@twig']
+        tags:
+            - { name: twig.extension }
+
     tnqsoft_material.service.email:
         class: Tnqsoft\MaterialBundle\Service\Email
         arguments: ['%mailer_noreply%', '%mailer_list_sources%', '%mailer_list_sources_password%', '@twig']

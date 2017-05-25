@@ -126,4 +126,8 @@ php bin/console bazinga:js-translation:dump
 php bin/console doctrine:mapping:import --force TnqsoftDemoBundle xml
 php bin/console doctrine:mapping:convert annotation ./src
 php bin/console doctrine:generate:entities TnqsoftDemoBundle
+
+# Generate CRUD
+php bin/console generate:doctrine:crud
+php bin/console generate:doctrine:crud --entity=TnqsoftDemoBundle:Author --format=annotation --with-write --no-interaction
 ```

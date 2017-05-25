@@ -1,0 +1,48 @@
+{% extends 'TnqsoftDemoBundle:Layout:layout.html.twig' %}
+{##############################################################################}
+{% block javascripts %}
+<script src="{{ asset('bundles/tnqsoftdemo/js/script.js') }}"></script>
+{% endblock %}
+{##############################################################################}
+{% block body %}
+    <div class="page-header">
+        <h1>Author
+            <small>List</small>
+        </h1>
+    </div>
+
+    {{ table_start({ id: 'tableDemo' }) }}
+        <thead>
+            <tr class="info">
+                <th>Name</th>
+                <th>Description</th>
+                <th>Createdat</th>
+                <th>Updatedat</th>
+                <th><i class="fa fa-key"></i></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% if paginator|length > 0 %}
+        {% for record in paginator %}
+            <tr>
+                <td><a href="#">{{ record.name }}</a></td>
+                <td>{{ record.description }}</td>
+                <td>{% if record.createdAt %}{{ record.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if record.updatedAt %}{{ record.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ record.id }}</td>
+                <td>
+                    <a href="#" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Chi tiết">
+                        <i class="fa fa-eye"></i>
+                    </a>
+                    <a href="#" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Sửa">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        {% endif %}
+        </tbody>
+    {{ table_end() }}
+
+{% endblock %}
