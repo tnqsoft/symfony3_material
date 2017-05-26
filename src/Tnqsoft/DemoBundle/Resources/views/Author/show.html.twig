@@ -7,28 +7,30 @@
         </h1>
     </div>
 
+    {{ flash_message() }}
+
     <div class="row">
         <div class="col-sm-6">
             <div class="row">
-                <div class="col-sm-3 text-right">Name:
+                <div class="col-sm-3 text-right"><strong>Name:</strong>
                 </div>
                 <div class="col-sm-9">{{ entity.name }}</div>
             </div>
             <div class="row">
-                <div class="col-sm-3 text-right">Description:
+                <div class="col-sm-3 text-right"><strong>Description:</strong>
                 </div>
                 <div class="col-sm-9">{{ entity.description }}</div>
             </div>
             {% if entity.createdAt %}
                 <div class="row">
-                    <div class="col-sm-3 text-right">Created At:
+                    <div class="col-sm-3 text-right"><strong>Created At:</strong>
                     </div>
                     <div class="col-sm-9">{{ entity.createdAt|date('Y-m-d H:i:s') }}</div>
                 </div>
             {% endif %}
             {% if entity.updatedAt %}
                 <div class="row">
-                    <div class="col-sm-3 text-right">Updated At:
+                    <div class="col-sm-3 text-right"><strong>Updated At:</strong>
                     </div>
                     <div class="col-sm-9">{{ entity.updatedAt|date('Y-m-d H:i:s') }}</div>
                 </div>

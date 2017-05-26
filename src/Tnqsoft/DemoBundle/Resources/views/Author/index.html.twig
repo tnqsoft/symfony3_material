@@ -16,22 +16,49 @@
         }) }}
     </p>
 
+    {{ flash_message() }}
+
     {{ table_start({ id: 'tableDemo' }) }}
-        <thead>
-            <tr class="info">
-                <th>Name</th>
-                <th>Description</th>
-                <th>Createdat</th>
-                <th>Updatedat</th>
-                <th><i class="fa fa-key"></i></th>
-                <th></th>
-            </tr>
-        </thead>
+        {{ table_head({
+            class: 'info',
+            columns: [
+                {
+                    width: '30%',
+                    label: 'Name',
+                    field: 'name'
+                },
+                {
+                    width: '30%',
+                    label: 'Description',
+                    field: 'description'
+                },
+                {
+                    width: '15%',
+                    label: 'Createdat',
+                    field: 'createdAt'
+                },
+                {
+                    width: '15%',
+                    label: 'Updatedat',
+                    field: 'updatedAt'
+                },
+                {
+                    width: '1%',
+                    label: '<i class="fa fa-key"></i>',
+                    field: 'id',
+                    nowrap: true
+                },
+                {
+                    width: '9%',
+                    label: ''
+                },
+            ]
+        }) }}
         <tbody>
         {% if paginator|length > 0 %}
         {% for entity in paginator %}
             <tr>
-                <td><a href="#">{{ entity.name }}</a></td>
+                <td><a href="{{ path('admin_author_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
                 <td>{{ entity.description }}</td>
                 <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{% if entity.updatedAt %}{{ entity.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
@@ -57,5 +84,7 @@
         {% endif %}
         </tbody>
     {{ table_end() }}
+
+    {{ pagination({ paginator: paginator }) }}
 
 {% endblock %}

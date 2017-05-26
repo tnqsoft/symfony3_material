@@ -6,12 +6,41 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 abstract class BaseCrudController extends Controller
 {
+    const ABSOLUTE_URL  = UrlGeneratorInterface::ABSOLUTE_URL;
+    const ABSOLUTE_PATH = UrlGeneratorInterface::ABSOLUTE_PATH;
+    const RELATIVE_PATH = UrlGeneratorInterface::RELATIVE_PATH;
+    const NETWORK_PATH = UrlGeneratorInterface::NETWORK_PATH;
+
     abstract public function getRoutePrefix();
 
     abstract public function getTemplateFolder();
+
+    /**
+     * Generates a URL from the given parameters.
+     *
+     * @param string $route         The name of the route
+     * @param mixed  $parameters    An array of parameters
+     * @param int    $referenceType The type of reference (one of the constants in UrlGeneratorInterface)
+     * @param boolean $keepParams
+     *
+     * @return string The generated URL
+     *
+     * @see UrlGeneratorInterface
+     */
+    protected function generateUrl($route, $parameters = array(), $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH, $keepParams = false)
+    {
+        $request = Request::createFromGlobals();
+        if ($keepParams === true) {
+            $parameters = array_merge($parameters, $request->query->all());
+        }
+
+        return parent::generateUrl($route, $parameters, $referenceType);
+    }
 
     /**
      * Get Route Name Full
@@ -63,6 +92,15 @@ abstract class BaseCrudController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+    public function addFlasMessage($type, $message)
+    {
+        $session = new Session();
+        if ($session->isStarted()) {
+            $session->start();
+        }
+        $session->getFlashBag()->add($type, $message);
     }
 
 }

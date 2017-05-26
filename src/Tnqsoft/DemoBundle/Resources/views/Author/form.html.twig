@@ -1,5 +1,7 @@
 {% form_theme form 'TnqsoftMaterialBundle:Form:form_horizontal_layout.html.twig' %}
 
+{{ flash_message() }}
+
 <div class="row">
     <div class="col-sm-6">
         {{ form_start(form) }}
@@ -23,6 +25,17 @@
                             'icon': 'save',
                         }) }}
                     </li>
+                    {% if entity.id is null %}
+                    <li>
+                        {{ button({
+                            'text': 'Save and Add',
+                            'type': 'submit',
+                            'class': 'primary',
+                            'icon': 'save',
+                            'attr': 'name="btnSaveAndAdd"'
+                        }) }}
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

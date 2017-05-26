@@ -58,7 +58,13 @@ class AuthorController extends BaseCrudController
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirectToRoute($this->getRouteNameFull('show'), array('id' => $entity->getId()));
+            $this->addFlasMessage('success', 'Create success');
+
+            if (($request->request->has('btnSaveAndAdd'))) {
+                return $this->redirectToRoute($this->getRouteNameFull('new'));
+            } else {
+                return $this->redirectToRoute($this->getRouteNameFull('show'), array('id' => $entity->getId()));
+            }
         }
 
         return array(
@@ -103,6 +109,7 @@ class AuthorController extends BaseCrudController
             $em->persist($entity);
             $em->flush();
 
+            $this->addFlasMessage('success', 'Update success');
             return $this->redirectToRoute($this->getRouteNameFull('edit'), array('id' => $entity->getId()));
         }
 
@@ -129,6 +136,8 @@ class AuthorController extends BaseCrudController
             $em->remove($entity);
             $em->flush();
         }
+
+        $this->addFlasMessage('warning', 'Delete success');
 
         return $this->redirectToRoute($this->getRouteNameFull('list'));
     }

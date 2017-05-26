@@ -45,3 +45,7 @@ $('.frm-delete').submit(function(e){
     });
     return false;
 });
+
+$(".alert-dismissible").delay(4000).slideUp(200, function() {
+    $(this).alert('close');
+});
