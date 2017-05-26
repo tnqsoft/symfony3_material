@@ -29,7 +29,7 @@
         {% if attr is defined %}{{ attr|raw }}{% endif %}
     >
         {% if icon is defined %}<i class="fa fa-{{ icon }}"></i>{% endif %}
-        {{ text }}
+        {{ text|raw }}
     </button>
 {% endblock %}
 
@@ -43,7 +43,7 @@
         {% if icon is defined %}
             <i class="fa fa-{{ icon }}"></i>
         {% endif %}
-        {{ text }}
+        {{ text|raw }}
     </a>
 {% endblock %}
 {#----------------------------------------------------------#}
@@ -55,5 +55,18 @@
     {% if id is defined %}id="{{ id }}"{% endif %}
     {% if attr is defined %}{{ attr|raw }}{% endif %}
 ></i>
+{% endblock %}
+{#----------------------------------------------------------#}
+
+{# MODAL #}
+{% block modalDelete %}
+{% include 'TnqsoftMaterialBundle:Common:Modal/delete.html.twig'
+with {
+    'class': class,
+    'id': id,
+    'attr': attr,
+    'size': size,
+}
+%}
 {% endblock %}
 {#----------------------------------------------------------#}

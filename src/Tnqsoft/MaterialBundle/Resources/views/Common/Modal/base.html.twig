@@ -1,0 +1,26 @@
+<div
+    class="modal fade {% if class is defined %}{{ class }}{% endif %}"
+    tabindex="-1"
+    role="dialog"
+    {% if id is defined %}id="{{ id }}"{% endif %}
+    {% if attr is defined %}{{ attr|raw }}{% endif %}
+>
+    <div class="modal-dialog {% if size is defined %}{{ size }}{% endif %}" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                {% block modalHeader %}{% endblock %}
+            </div>
+            <div class="modal-body">
+                {% block modalBody %}{% endblock %}
+            </div>
+            {% if block('modalFooter') %}
+                <div class="modal-footer">
+                    {% block modalFooter %}{% endblock %}
+                </div>
+            {% endif %}
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

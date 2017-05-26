@@ -7,20 +7,17 @@ services:
 
     tnqsoft_material.twig.extension.common:
         class: Tnqsoft\MaterialBundle\Twig\Extension\CommonExtension
-        public: false
         tags:
             - { name: twig.extension }
 
-    tnqsoft_material.twig.extension.element:
-        class: Tnqsoft\MaterialBundle\Twig\Extension\ElementExtension
-        public: false
-        arguments: ['@twig', 'TnqsoftMaterialBundle:Common:element.html.twig']
+    tnqsoft_material.twig.extension.boostrap_element:
+        class: Tnqsoft\MaterialBundle\Twig\Extension\BootstrapElementExtension
+        arguments: ['TnqsoftMaterialBundle:Common:element.html.twig']
         tags:
-            - { name: twig.extension, alias: element_extension }
+            - { name: twig.extension }
 
     tnqsoft_material.twig.extension.routing:
         class: Tnqsoft\MaterialBundle\Twig\Extension\RoutingExtension
-        public: false
         arguments:
             - '@router'
             - '@request_stack'

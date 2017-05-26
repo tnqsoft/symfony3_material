@@ -5,7 +5,10 @@ namespace Tnqsoft\DemoBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+
+use Tnqsoft\MaterialBundle\Controller\BaseCrudController;
 
 use Tnqsoft\DemoBundle\Entity\Author;
 use Tnqsoft\DemoBundle\Form\AuthorType;
@@ -15,7 +18,7 @@ use Tnqsoft\DemoBundle\Form\AuthorType;
  *
  * @Route("author")
  */
-class AuthorController extends Controller
+class AuthorController extends BaseCrudController
 {
     /**
      * Lists all entities.
@@ -25,37 +28,15 @@ class AuthorController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $page = $request->query->get('page', 1);
-        $limit = $request->query->get('limit', 15);
-        $orderBy = $request->query->get('orderBy', 'name');
-        $orderDir = $request->query->get('orderDir', 'desc');
-        $keyword = $request->query->get('keyword', '');
+        $criteria = $this->getCriteriaQuery($request);
 
         $em = $this->getDoctrine()->getManager();
         $authorRepository = $em->getRepository(Author::class);
-        $paginator = $authorRepository->getListPagination($page, $limit, $orderBy, $orderDir, $keyword);
+        $paginator = $authorRepository->getListPagination($criteria);
 
-        return $this->render('TnqsoftDemoBundle:Author:index.html.twig', array(
+        return $this->render($this->getTemplateFolder().':index.html.twig', array(
             'paginator' => $paginator,
-            'orderBy' => $orderBy,
-            'orderDir' => $orderDir,
-            'keyword' => $keyword,
-        ));
-    }
-
-    /**
-     * Finds and displays a entity.
-     *
-     * @Route("/{id}", name="admin_author_show")
-     * @Method("GET")
-     */
-    public function showAction(Author $entity)
-    {
-        $deleteForm = $this->createDeleteForm($entity);
-
-        return $this->render('TnqsoftDemoBundle:Author:show.html.twig', array(
-            'entity' => $entity,
-            'delete_form' => $deleteForm->createView(),
+            'criteria' => $criteria,
         ));
     }
 
@@ -64,6 +45,7 @@ class AuthorController extends Controller
      *
      * @Route("/new", name="admin_author_new")
      * @Method({"GET", "POST"})
+     * @Template()
      */
     public function newAction(Request $request)
     {
@@ -76,13 +58,30 @@ class AuthorController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirectToRoute('admin_author_show', array('id' => $entity->getId()));
+            return $this->redirectToRoute($this->getRouteNameFull('show'), array('id' => $entity->getId()));
         }
 
-        return $this->render('TnqsoftDemoBundle:Author:new.html.twig', array(
+        return array(
             'entity' => $entity,
             'form' => $form->createView(),
-        ));
+        );
+    }
+
+    /**
+     * Finds and displays a entity.
+     *
+     * @Route("/{id}", name="admin_author_show")
+     * @Method("GET")
+     * @Template()
+     */
+    public function showAction(Author $entity)
+    {
+        $deleteForm = $this->createDeleteForm($entity);
+
+        return array(
+            'entity' => $entity,
+            'delete_form' => $deleteForm->createView(),
+        );
     }
 
     /**
@@ -90,6 +89,7 @@ class AuthorController extends Controller
      *
      * @Route("/{id}/edit", name="admin_author_edit")
      * @Method({"GET", "POST"})
+     * @Template()
      */
     public function editAction(Request $request, Author $entity)
     {
@@ -103,14 +103,14 @@ class AuthorController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirectToRoute('admin_author_edit', array('id' => $entity->getId()));
+            return $this->redirectToRoute($this->getRouteNameFull('edit'), array('id' => $entity->getId()));
         }
 
-        return $this->render('TnqsoftDemoBundle:Author:edit.html.twig', array(
+        return array(
             'entity' => $entity,
             'form' => $form->createView(),
             'delete_form' => $deleteForm->createView(),
-        ));
+        );
     }
 
     /**
@@ -130,22 +130,27 @@ class AuthorController extends Controller
             $em->flush();
         }
 
-        return $this->redirectToRoute('admin_author_list');
+        return $this->redirectToRoute($this->getRouteNameFull('list'));
+    }
+
+    //Implemnet Abstract Method------------------------------------
+    /**
+     * Get Route Prefix
+     *
+     * @return string
+     */
+    public function getRoutePrefix()
+    {
+        return 'admin_author';
     }
 
     /**
-     * Creates a form to delete a entity.
+     * Get Template Folder
      *
-     * @param Author $entity The author entity
-     *
-     * @return \Symfony\Component\Form\Form The form
+     * @return string
      */
-    private function createDeleteForm(Author $entity)
+    public function getTemplateFolder()
     {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_author_delete', array('id' => $entity->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
+        return 'TnqsoftDemoBundle:Author';
     }
 }

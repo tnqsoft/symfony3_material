@@ -6,33 +6,43 @@
         {{ form_widget(form) }}
         <div class="form-group">
             <div class="col-sm-8 col-sm-offset-4">
-                {{ link_button({
-                        'text': 'Back',
-                        'href': path('admin_author_list'),
-                        'class': 'default',
-                        'icon': 'chevron-left',
-                    }) }}
-                {{ button({
-                        'text': 'Save',
-                        'type': 'submit',
-                        'class': 'primary',
-                        'icon': 'save',
-                    }) }}
+                <ul class="button-horizontal-list clearfix">
+                    <li>
+                        {{ link_button({
+                            'text': 'Back',
+                            'href': path('admin_author_list'),
+                            'class': 'default',
+                            'icon': 'chevron-left',
+                        }) }}
+                    </li>
+                    <li>
+                        {{ button({
+                            'text': entity.id ? 'Update' : 'Save',
+                            'type': 'submit',
+                            'class': 'primary',
+                            'icon': 'save',
+                        }) }}
+                    </li>
+                </ul>
             </div>
         </div>
         {{ form_end(form) }}
         <div class="row">
             <div class="col-sm-8 col-sm-offset-4">
-            {% if delete_form is defined %}
-            {{ form_start(delete_form) }}
-                {{ button({
-                    'text': 'Delete',
-                    'type': 'submit',
-                    'class': 'danger',
-                    'icon': 'trash',
-                }) }}
-            {{ form_end(delete_form) }}
-            {% endif %}
+                <ul class="button-horizontal-list clearfix">
+                    <li>
+                        {% if delete_form is defined %}
+                            {{ form_start(delete_form) }}
+                            {{ button({
+                                'text': 'Delete',
+                                'type': 'submit',
+                                'class': 'danger',
+                                'icon': 'trash',
+                            }) }}
+                            {{ form_end(delete_form) }}
+                        {% endif %}
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

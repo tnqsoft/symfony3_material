@@ -1,0 +1,16 @@
+.button-horizontal-list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.button-horizontal-list > li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    float: left;
+    margin-right: 10px;
+}
+
+i[class*="fa-"] {
+    vertical-align: middle;
+}
