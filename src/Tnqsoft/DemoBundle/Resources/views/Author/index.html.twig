@@ -7,14 +7,22 @@
         </h1>
     </div>
 
-    <p>
-        {{ link_button({
-            'text': 'Add New',
-            'href': path('admin_author_new'),
-            'class': 'success',
-            'icon': 'plus',
-        }) }}
-    </p>
+    <div class="row">
+        <div class="col-sm-9">
+            {{ link_button({
+                'text': 'Add New',
+                'href': path('admin_author_new'),
+                'class': 'success',
+                'icon': 'plus',
+            }) }}
+        </div>
+        <div class="col-sm-3">
+            {{ search_box({
+                url: path('admin_author_list'),
+                form: search_form
+            }) }}
+        </div>
+    </div>
 
     {{ flash_message() }}
 
@@ -66,7 +74,7 @@
                 <td>
                     {{ link_button({
                         'text': '',
-                        'href': path('admin_author_show', { 'id': entity.id }),
+                        'href': path('admin_author_show', { 'id': entity.id }, null, true),
                         'class': 'primary',
                         'icon': 'eye',
                         'attr': 'data-toggle="tooltip" data-placement="top" title="Detail"'

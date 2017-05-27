@@ -57,7 +57,7 @@ class Paginator extends BasePaginator
     {
         parent::__construct($dql);
 
-        $this->page = $page;
+        $this->page = intval($page);
         $this->limit = ($limit <= 50)?$limit:50;
 
         $this->getQuery()
@@ -67,11 +67,46 @@ class Paginator extends BasePaginator
         //Calculate
         $iteratorsRecord = $this->getIterator()->count();
         $this->totalRecord = $this->count();
-        $this->totalPage = ceil($this->totalRecord / $this->limit);
+        $this->totalPage = intval(ceil($this->totalRecord / $this->limit));
         $this->startRecord = (($this->page - 1) * $this->limit) + 1;
         $this->endRecord = $this->startRecord + $iteratorsRecord - 1;
         $this->prevPage = ($this->page - 1 > 0) ? $this->page - 1 : 1;
         $this->nextPage = ($this->page + 1 < $this->totalPage) ? $this->page + 1 : $this->totalPage;
+    }
+
+    /**
+     * Smart Pagination
+     *
+     * @return array
+     */
+    public function smartPagination()
+    {
+        $step = 2;
+        $left = $this->page - $step;
+        $right = $this->page + $step + 1;
+        $range = array();
+        $rangeWithDots = array();
+        $temp = null;
+
+        for ($i = 1; $i <= $this->totalPage; $i++) {
+            if ($i === 1 || $i === $this->totalPage || $i >= $left && $i < $right) {
+                $range[] = $i;
+            }
+        }
+
+        foreach ($range as $i) {
+            if ($temp) {
+                if ($i - $temp === 2) {
+                    $rangeWithDots[] = $temp + 1;
+                } elseif ($i - $temp !== 1) {
+                    $rangeWithDots[] = '...';
+                }
+            }
+            $rangeWithDots[] = $i;
+            $temp = $i;
+        }
+
+        return $rangeWithDots;
     }
 
     /**

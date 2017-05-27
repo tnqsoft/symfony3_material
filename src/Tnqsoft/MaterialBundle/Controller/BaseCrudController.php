@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
+use Tnqsoft\MaterialBundle\Form\Type\SearchType;
+
 abstract class BaseCrudController extends Controller
 {
     const ABSOLUTE_URL  = UrlGeneratorInterface::ABSOLUTE_URL;
@@ -63,7 +65,7 @@ abstract class BaseCrudController extends Controller
      * @param  string  $defaultOrderDir
      * @return array
      */
-    public function getCriteriaQuery(Request $request, $page = 1, $limit = 15, $defaultOrder = 'id', $defaultOrderDir = 'DESC')
+    public function getCriteriaQuery(Request $request, $page = 1, $limit = 10, $defaultOrder = 'id', $defaultOrderDir = 'DESC')
     {
         return array(
             'page' => $request->query->get('page', $page),
@@ -92,6 +94,16 @@ abstract class BaseCrudController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+    /**
+     * Creates a form to search a entity.
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    public function createSearchForm()
+    {
+        return $this->createForm(SearchType::class);
     }
 
     public function addFlasMessage($type, $message)

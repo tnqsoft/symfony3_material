@@ -12,6 +12,7 @@ services:
 
     tnqsoft_material.twig.extension.boostrap_element:
         class: Tnqsoft\MaterialBundle\Twig\Extension\BootstrapElementExtension
+        public: false
         arguments: ['TnqsoftMaterialBundle:Common:element.html.twig']
         tags:
             - { name: twig.extension }

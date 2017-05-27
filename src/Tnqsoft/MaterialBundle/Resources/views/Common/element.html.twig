@@ -1,7 +1,7 @@
 {# TABLE #}
 {% block start %}
     <table
-        class="table table-striped table-bordered table-hover {% if class is defined %}{{ class }}{% endif %}"
+        class="table table-striped table-bordered table-hover table-list {% if class is defined %}{{ class }}{% endif %}"
         {% if id is defined %}id="{{ id }}"{% endif %}
         {% if attr is defined %}{{ attr|raw }}{% endif %}
     >
@@ -123,6 +123,7 @@ with {
             <ul class="pagination {{ size }}">
                 {% set params = app.request.query.all|merge(app.request.get('_route_params')) %}
                 {% set routerName = app.request.get('_route') %}
+                {% set pages = paginator.smartPagination() %}
                 {#--------------------------------------------#}
                 {# FIRST #}
                 {% if paginator.page > 1 %}
@@ -149,9 +150,11 @@ with {
                 </li>
                 {% endif %}
                 {#--------------------------------------------#}
-                {% for i in 1..paginator.totalPage %}
+                {% for i in pages %}
                     {% if i == paginator.page  %}
                     <li class="active"><span>{{ i }}</span></li>
+                    {% elseif i == '...' %}
+                    <li><span>{{ i }}</span></li>
                     {% else %}
                     <li><a href="{{ path(routerName, params|merge({'page': i})) }}">{{ i }}</a></li>
                     {% endif %}
@@ -192,3 +195,28 @@ with {
 {% endif %}
 {% endblock %}
 {#----------------------------------------------------------#}
+
+{# SEARCH #}
+{% block searchbox %}
+{{ form_start(form) }}
+<div class="input-group">
+    {#{ form_label(search_form.keyword) }#}
+    {#{ form_errors(search_form.keyword) }#}
+    {{ form_widget(form.keyword) }}
+    <span class="input-group-btn">
+      {{ button({
+          'text': '',
+          'class': 'info',
+          'type': 'submit',
+          'icon': 'search',
+      }) }}
+      {{ link_button({
+          'text': '',
+          'class': 'warning',
+          'href': url,
+          'icon': 'refresh',
+      }) }}
+    </span>
+</div><!-- /input-group -->
+{{ form_end(form) }}
+{% endblock %}

@@ -27,7 +27,7 @@ class AuthorRepository extends EntityRepository
             ->orderBy('a.'.$orderBy, $orderDir);
 
         if ($keyword !== '') {
-            $query->andWhere('a.name LIKE :keyword OR n.description LIKE :keyword')
+            $query->andWhere('a.name LIKE :keyword OR a.description LIKE :keyword')
                 ->setParameter('keyword', '%'.$keyword.'%');
         }
 

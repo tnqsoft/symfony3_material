@@ -48,6 +48,8 @@ class BootstrapElementExtension extends \Twig_Extension
             new \Twig_SimpleFunction('alert', array($this, 'genAlert'), $this->methodOptions),
             new \Twig_SimpleFunction('flash_message', array($this, 'genFlashMessage'), $this->methodOptions),
             new \Twig_SimpleFunction('pagination', array($this, 'genPagination'), $this->methodOptions),
+            new \Twig_SimpleFunction('search_box', array($this, 'genSearchbox'), $this->methodOptions),
+
         );
     }
 
@@ -218,6 +220,18 @@ class BootstrapElementExtension extends \Twig_Extension
         );
 
         return join("\n", $alerts);
+    }
+
+    /**
+     * Generate Alert
+     *
+     * @param \Twig_Environment $env
+     * @param array $options
+     * @return string
+     */
+    public function genSearchbox(\Twig_Environment $env, $context, array $options = array())
+    {
+        return $env->loadTemplate($this->template)->renderBlock('searchbox', $options);
     }
 
     /**

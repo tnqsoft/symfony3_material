@@ -30,6 +30,9 @@ class AuthorController extends BaseCrudController
     {
         $criteria = $this->getCriteriaQuery($request);
 
+        $searchForm = $this->createSearchForm();
+        $searchForm->handleRequest($request);
+
         $em = $this->getDoctrine()->getManager();
         $authorRepository = $em->getRepository(Author::class);
         $paginator = $authorRepository->getListPagination($criteria);
@@ -37,6 +40,7 @@ class AuthorController extends BaseCrudController
         return $this->render($this->getTemplateFolder().':index.html.twig', array(
             'paginator' => $paginator,
             'criteria' => $criteria,
+            'search_form' => $searchForm->createView(),
         ));
     }
 
