@@ -19,6 +19,10 @@ i[class*="fa-"] {
     margin-top: 30px;
 }
 
-.table-list {
-    margin-top: 30px;
+.alert {
+    margin-bottom: 30px;
+}
+
+.table-list-tools {
+    margin-bottom: 30px;
 }
