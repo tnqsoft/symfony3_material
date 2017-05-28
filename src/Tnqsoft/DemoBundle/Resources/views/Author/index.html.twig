@@ -11,7 +11,7 @@
         <div class="col-sm-9">
             {{ link_button({
                 'text': 'Add New',
-                'href': path('admin_author_new'),
+                'href': path('admin_author_new', {}, null, true),
                 'class': 'success',
                 'icon': 'plus',
             }) }}
@@ -66,7 +66,7 @@
         {% if paginator|length > 0 %}
         {% for entity in paginator %}
             <tr>
-                <td><a href="{{ path('admin_author_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
+                <td><a href="{{ path('admin_author_show', { 'id': entity.id }, null, true) }}">{{ entity.name }}</a></td>
                 <td>{{ entity.description }}</td>
                 <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{% if entity.updatedAt %}{{ entity.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
@@ -81,7 +81,7 @@
                     }) }}
                     {{ link_button({
                         'text': '',
-                        'href': path('admin_author_edit', { 'id': entity.id }),
+                        'href': path('admin_author_edit', { 'id': entity.id }, null, true),
                         'class': 'info',
                         'icon': 'pencil',
                         'attr': 'data-toggle="tooltip" data-placement="top" title="Edit"'

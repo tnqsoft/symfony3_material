@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 use Tnqsoft\MaterialBundle\Controller\BaseCrudController;
 
@@ -65,9 +66,9 @@ class AuthorController extends BaseCrudController
             $this->addFlasMessage('success', 'Create success');
 
             if (($request->request->has('btnSaveAndAdd'))) {
-                return $this->redirectToRoute($this->getRouteNameFull('new'));
+                return $this->redirectToRouteKeepParams($this->getRouteNameFull('new'));
             } else {
-                return $this->redirectToRoute($this->getRouteNameFull('show'), array('id' => $entity->getId()));
+                return $this->redirectToRouteKeepParams($this->getRouteNameFull('show'), array('id' => $entity->getId()));
             }
         }
 
@@ -114,7 +115,7 @@ class AuthorController extends BaseCrudController
             $em->flush();
 
             $this->addFlasMessage('success', 'Update success');
-            return $this->redirectToRoute($this->getRouteNameFull('edit'), array('id' => $entity->getId()));
+            return $this->redirectToRouteKeepParams($this->getRouteNameFull('edit'), array('id' => $entity->getId()));
         }
 
         return array(
@@ -143,7 +144,7 @@ class AuthorController extends BaseCrudController
 
         $this->addFlasMessage('warning', 'Delete success');
 
-        return $this->redirectToRoute($this->getRouteNameFull('list'));
+        return $this->redirectToRouteKeepParams($this->getRouteNameFull('list'));
     }
 
     //Implemnet Abstract Method------------------------------------

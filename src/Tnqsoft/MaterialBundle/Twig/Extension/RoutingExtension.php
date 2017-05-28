@@ -30,9 +30,11 @@ class RoutingExtension extends BaseRoutingExtension
     public function getPath($name, $parameters = array(), $relative = false, $keepParams = false)
     {
         $request = $this->requestStack->getCurrentRequest();
+
         if ($keepParams === true) {
             $parameters = array_merge($parameters, $request->query->all());
         }
+
         return parent::getPath($name, $parameters, $relative);
     }
 }
