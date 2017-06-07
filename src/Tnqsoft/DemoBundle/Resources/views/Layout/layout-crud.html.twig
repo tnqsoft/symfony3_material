@@ -1,0 +1,16 @@
+{% extends 'TnqsoftDemoBundle:Layout:layout.html.twig' %}
+{##############################################################################}
+{% block body %}
+  <div class="row">
+    <div class="col-md-2">
+      {% include 'TnqsoftDemoBundle:Partials:left-nav.html.twig' with {} %}
+      {% block bodyLeft %}{% endblock %}
+    </div>
+    <!-- /.col -->
+    <div class="col-md-10">
+      {% block bodyRight %}{% endblock %}
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+{% endblock %}

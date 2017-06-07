@@ -27,11 +27,11 @@ CREATE TABLE `tbl_author` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_author` */
 
-insert  into `tbl_author`(`id`,`name`,`description`,`created_at`,`updated_at`) values (8,'xxxxxxx','xxxx',NULL,NULL),(10,'xxxxxxxx1','11111',NULL,NULL),(11,'12313123','1212312',NULL,NULL),(12,'12312312 312312','123123',NULL,NULL),(13,'5',NULL,NULL,NULL),(14,'6',NULL,NULL,NULL),(15,'7','xxxx',NULL,NULL),(16,'8',NULL,NULL,NULL),(17,'9',NULL,NULL,NULL),(18,'10',NULL,NULL,NULL),(19,'11',NULL,NULL,NULL),(20,'11',NULL,NULL,NULL),(21,'13',NULL,NULL,NULL),(22,'14',NULL,NULL,NULL),(25,'15',NULL,NULL,NULL),(26,'16',NULL,NULL,NULL),(28,'17',NULL,NULL,NULL),(29,'xxxx','xxxxxx',NULL,NULL),(30,'xxxxxx',NULL,NULL,NULL),(31,'xxxxxx',NULL,NULL,NULL),(32,'xxxxx',NULL,NULL,NULL),(33,'xxxxx 1',NULL,NULL,NULL),(34,'7xxxxxx',NULL,NULL,NULL),(35,'bbbbbbbbbb',NULL,NULL,NULL);
+insert  into `tbl_author`(`id`,`name`,`description`,`created_at`,`updated_at`) values (8,'xxxxxxx','xxxx',NULL,NULL),(10,'xxxxxxxx1','11111',NULL,NULL),(11,'12313123','1212312',NULL,NULL),(12,'12312312 312312','123123',NULL,NULL),(13,'5',NULL,NULL,NULL),(14,'6',NULL,NULL,NULL),(15,'7','xxxx',NULL,NULL),(16,'8',NULL,NULL,NULL),(17,'9',NULL,NULL,NULL),(18,'10',NULL,NULL,NULL),(19,'11',NULL,NULL,NULL),(20,'11',NULL,NULL,NULL),(21,'13',NULL,NULL,NULL),(22,'14',NULL,NULL,NULL),(25,'15',NULL,NULL,NULL),(26,'16',NULL,NULL,NULL),(28,'17',NULL,NULL,NULL),(29,'xxxx','xxxxxx',NULL,NULL),(30,'xxxxxx',NULL,NULL,NULL),(31,'xxxxxx',NULL,NULL,NULL),(33,'xxxxx 1',NULL,NULL,NULL),(34,'7xxxxxx',NULL,NULL,NULL),(36,'xxxx1','xxxxx',NULL,NULL),(37,'xxxxx 2','xxxxxxx',NULL,NULL);
 
 /*Table structure for table `tbl_category` */
 
@@ -47,7 +47,7 @@ CREATE TABLE `tbl_category` (
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `slug_idx` (`slug`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_category` */
 

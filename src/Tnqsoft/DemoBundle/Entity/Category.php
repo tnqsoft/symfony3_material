@@ -3,12 +3,17 @@
 namespace Tnqsoft\DemoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Category
  *
  * @ORM\Table(name="tbl_category", uniqueConstraints={@ORM\UniqueConstraint(name="slug_idx", columns={"slug"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Tnqsoft\DemoBundle\Repository\CategoryRepository")
+ * @UniqueEntity(fields={"slug"}, message="Slug này đã tồn tại")
+ * @ExclusionPolicy("all")
  */
 class Category
 {
@@ -23,6 +28,7 @@ class Category
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=false)
+     * @Assert\NotBlank()
      */
     private $title;
 
@@ -30,6 +36,7 @@ class Category
      * @var string
      *
      * @ORM\Column(name="slug", type="string", length=255, nullable=false)
+     * @Assert\NotBlank()
      */
     private $slug;
 
@@ -37,8 +44,9 @@ class Category
      * @var boolean
      *
      * @ORM\Column(name="is_active", type="boolean", nullable=false)
+     * @Assert\NotBlank()
      */
-    private $isActive = '1';
+    private $isActive = true;
 
     /**
      * @var \DateTime
@@ -64,18 +72,37 @@ class Category
     private $id;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="Tnqsoft\DemoBundle\Entity\News", mappedBy="category")
      */
     private $news;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Category", mappedBy="parent")
+     * @Expose
+     */
+    protected $children;
+
+    /**
+     * @var Category
+     *
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="children")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
+     * @Expose
+     */
+    private $parent;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->news = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->isActive = true;
+        $this->children = new ArrayCollection();
+        $this->news = new ArrayCollection();
     }
 
 
@@ -178,13 +205,13 @@ class Category
     /**
      * Set createdAt
      *
-     * @param \DateTime $createdAt
+     * @ORM\PrePersist
      *
-     * @return Category
+     * @return Author
      */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt()
     {
-        $this->createdAt = $createdAt;
+        $this->createdAt = new \DateTime();
 
         return $this;
     }
@@ -202,13 +229,13 @@ class Category
     /**
      * Set updatedAt
      *
-     * @param \DateTime $updatedAt
+     * @ORM\PreUpdate
      *
-     * @return Category
+     * @return Author
      */
-    public function setUpdatedAt($updatedAt)
+    public function setUpdatedAt()
     {
-        $this->updatedAt = $updatedAt;
+        $this->updatedAt = new \DateTime();
 
         return $this;
     }
@@ -265,5 +292,36 @@ class Category
     public function getNews()
     {
         return $this->news;
+    }
+
+    /**
+     * Has Child
+     *
+     * @param  Category $child
+     * @return booleans
+     */
+    public function hasChild(Category $child)
+    {
+        return $this->children->contains($child);
+    }
+
+    /**
+     * @param Category $child
+     */
+    public function addChild(Category $child)
+    {
+        if (!$this->hasChild($child)) {
+            $this->children->add($child);
+            $child->setParent($this);
+        }
+    }
+    /**
+     * @param Category $child
+     */
+    public function removeChild(Category $child)
+    {
+        if ($this->hasChild($child)) {
+            $this->children->removeElement($child);
+        }
     }
 }

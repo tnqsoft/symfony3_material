@@ -3,12 +3,13 @@
 namespace Tnqsoft\DemoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Tags
  *
  * @ORM\Table(name="tbl_tags")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Tnqsoft\DemoBundle\Repository\TagsRepository")
  */
 class Tags
 {
@@ -16,6 +17,7 @@ class Tags
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -27,8 +29,6 @@ class Tags
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
-
 
     /**
      * Set name

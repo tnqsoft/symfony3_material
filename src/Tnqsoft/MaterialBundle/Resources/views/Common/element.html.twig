@@ -73,6 +73,20 @@
         {{ text|trans|raw }}
     </a>
 {% endblock %}
+
+{% block linkAnchor %}
+    <a
+        href="{{ href }}"
+        class="{{ class }}"
+        {% if id is defined %}id="{{ id }}"{% endif %}
+        {% if attr is defined %}{{ attr|raw }}{% endif %}
+    >
+        {% if icon is defined %}
+            <i class="fa fa-{{ icon }}"></i>
+        {% endif %}
+        {{ text|trans|raw }}
+    </a>
+{% endblock %}
 {#----------------------------------------------------------#}
 
 {# ICON #}

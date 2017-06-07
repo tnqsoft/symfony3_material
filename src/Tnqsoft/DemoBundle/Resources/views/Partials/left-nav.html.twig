@@ -1,0 +1,17 @@
+<div class="sidebar-offcanvas" id="sidebar">
+  <div class="list-group">
+    {{ link_anchor({
+        'text': 'Author',
+        'href': path('admin_author_list', {}, null, true),
+        'class': 'list-group-item',
+        'icon': 'caret-right',
+    }) }}
+
+    {{ link_anchor({
+        'text': 'Category',
+        'href': path('admin_author_list', {}, null, true),
+        'class': 'list-group-item',
+        'icon': 'caret-right',
+    }) }}
+  </div>
+</div>

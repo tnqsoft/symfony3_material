@@ -3,12 +3,14 @@
 namespace Tnqsoft\DemoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Author
  *
  * @ORM\Table(name="tbl_author")
  * @ORM\Entity(repositoryClass="Tnqsoft\DemoBundle\Repository\AuthorRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Author
 {
@@ -16,6 +18,7 @@ class Author
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -102,13 +105,13 @@ class Author
     /**
      * Set createdAt
      *
-     * @param \DateTime $createdAt
+     * @ORM\PrePersist
      *
      * @return Author
      */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt()
     {
-        $this->createdAt = $createdAt;
+        $this->createdAt = new \DateTime();
 
         return $this;
     }
@@ -126,13 +129,13 @@ class Author
     /**
      * Set updatedAt
      *
-     * @param \DateTime $updatedAt
+     * @ORM\PreUpdate
      *
      * @return Author
      */
-    public function setUpdatedAt($updatedAt)
+    public function setUpdatedAt()
     {
-        $this->updatedAt = $updatedAt;
+        $this->updatedAt = new \DateTime();
 
         return $this;
     }

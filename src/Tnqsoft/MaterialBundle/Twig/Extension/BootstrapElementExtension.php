@@ -44,6 +44,7 @@ class BootstrapElementExtension extends \Twig_Extension
             new \Twig_SimpleFunction('icon', array($this, 'genIcon'), $this->methodOptions),
             new \Twig_SimpleFunction('button', array($this, 'genButton'), $this->methodOptions),
             new \Twig_SimpleFunction('link_button', array($this, 'genLinkButton'), $this->methodOptions),
+            new \Twig_SimpleFunction('link_anchor', array($this, 'genLinkAnchor'), $this->methodOptions),
             new \Twig_SimpleFunction('modal_delete', array($this, 'genModalDelete'), $this->methodOptions),
             new \Twig_SimpleFunction('alert', array($this, 'genAlert'), $this->methodOptions),
             new \Twig_SimpleFunction('flash_message', array($this, 'genFlashMessage'), $this->methodOptions),
@@ -147,6 +148,22 @@ class BootstrapElementExtension extends \Twig_Extension
         );
         $options = array_replace_recursive($default, $options);
         return $env->loadTemplate($this->template)->renderBlock('linkButton', $options);
+    }
+
+    /**
+     * Generate button
+     *
+     * @param \Twig_Environment $env
+     * @param array $options
+     * @return string
+     */
+    public function genLinkAnchor(\Twig_Environment $env, $context, array $options = array()) {
+        $default = array(
+            'href' => '#',
+            'class' => ''
+        );
+        $options = array_replace_recursive($default, $options);
+        return $env->loadTemplate($this->template)->renderBlock('linkAnchor', $options);
     }
 
     /**
