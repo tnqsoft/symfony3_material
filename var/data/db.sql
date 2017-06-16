@@ -144,9 +144,11 @@ CREATE TABLE `tbl_user` (
   UNIQUE KEY `UNIQ_8D93D649F85E0677` (`username`),
   UNIQUE KEY `UNIQ_8D93D649E7927C74` (`email`),
   UNIQUE KEY `UNIQ_8D93D649444F97DD` (`phone`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Data for the table `tbl_user` */
+
+insert  into `tbl_user`(`id`,`username`,`password`,`email`,`fullname`,`phone`,`description`,`avatar`,`reset_token`,`reset_timeout`,`is_active`,`created_at`,`updated_at`,`roles`) values (14,'admin','$2y$13$Iaa8dlxNIXsQASwGuTJlUu5JzQaoxsWFKHnqslcQbjn/zAvsm6PKq','tuanquynh0508@gmail.com','admin','1234567890',NULL,NULL,NULL,NULL,1,'2017-06-16 16:58:42',NULL,'[\"ROLE_USER\"]');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

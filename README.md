@@ -130,4 +130,6 @@ php bin/console doctrine:generate:entities TnqsoftDemoBundle
 # Generate CRUD
 php bin/console generate:doctrine:crud
 php bin/console generate:doctrine:crud --entity=TnqsoftDemoBundle:Author --format=annotation --with-write --no-interaction
+
+php bin/console app:add-user
 ```

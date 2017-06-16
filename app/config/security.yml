@@ -5,10 +5,17 @@ security:
         ROLE_ADMIN: ROLE_USER
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
+    encoders:
+        # Our user class and the algorithm we'll use to encode passwords
+        # http://symfony.com/doc/current/book/security.html#encoding-the-user-s-password
+        Tnqsoft\UserBundle\Entity\User: bcrypt
+
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
-        in_memory:
-            memory: ~
+        # in_memory:
+        #     memory: ~
+        database_users:
+            entity: { class: TnqsoftUserBundle:User, property: username }
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -24,9 +31,35 @@ security:
             #http_basic: ~
 
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
-            #form_login: ~
+            form_login:
+                # The route name that the login form submits to
+                check_path: admin_user_login
+                # The name of the route where the login form lives
+                # When the user tries to access a protected page, they are redirected here
+                login_path: admin_user_login
+                # Secure the login form against CSRF
+                # Reference: http://symfony.com/doc/current/cookbook/security/csrf_in_login_form.html
+                csrf_token_generator: security.csrf.token_manager
+                use_referer: true
+                always_use_default_target_path: true
+                default_target_path: admin_dashboard
+            logout:
+                # The route name the user can go to in order to logout
+                path: admin_user_logout
+                # The name of the route to redirect to after logging out
+                target: admin_user_login
+            remember_me:
+                secret:   '%secret%'
+                lifetime: 604800 # 1 week in seconds
+                path:     /
+                # by default, the feature is enabled by checking a
+                # checkbox in the login form (see below), uncomment the
+                # following line to always enable it.
+                #always_remember_me: true
 
     access_control:
         # this is a catch-all for the admin area
         # additional security lives in the controllers
+        - { path: '^/admin/user/login', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: '^/admin', roles: ROLE_USER }
         - { path: '^/', roles: IS_AUTHENTICATED_ANONYMOUSLY }

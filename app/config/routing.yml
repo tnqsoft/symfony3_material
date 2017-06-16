@@ -6,7 +6,7 @@ tnqsoft_admin:
 tnqsoft_user:
     resource: "@TnqsoftUserBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /admin
 
 tnqsoft_material:
     resource: "@TnqsoftMaterialBundle/Resources/config/routing.yml"

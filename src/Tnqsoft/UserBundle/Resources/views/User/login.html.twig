@@ -1,0 +1,57 @@
+{% extends 'TnqsoftAdminBundle:Layout:layout.html.twig' %}
+{##############################################################################}
+{% block body %}
+  {#<p class="text-center">
+    <img src="{{ asset('img/logo.jpg') }}" height="200"/>
+  </p>#}
+
+  <form action="{{ path('admin_user_login') }}" method="post">
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+    <div class="panel panel-default panel-login">
+      <div class="panel-heading">
+        <h3 class="panel-title">Đăng nhập hệ thống</h3>
+      </div>
+      <div class="panel-body">
+        {% if error %}
+          <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        <div class="form-group">
+          <label for="exampleInputEmail1">Tài khoản:</label>
+          <div class="input-group">
+            <span class="input-group-addon" id="sizing-addon2">
+              <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+            </span>
+            <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}" aria-describedby="sizing-addon2"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Mật khẩu:</label>
+          <div class="input-group">
+            <span class="input-group-addon" id="sizing-addon2">
+              <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+            </span>
+            <input type="password" class="form-control" id="password" name="_password" aria-describedby="sizing-addon2"/>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="row">
+          <div class="col-xs-6">
+            <button type="submit" class="btn btn-primary">Đăng nhập</button>
+          </div>
+          <div class="col-xs-6 text-right">
+            <input type="checkbox" id="remember_me" name="_remember_me" checked/>
+            <label for="remember_me">Ghi nhớ đăng nhập</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {#
+        If you want to control the URL the user
+        is redirected to on success (more details below)
+        <input type="hidden" name="_target_path" value="/account" />
+    #}
+  </form>
+{% endblock %}
