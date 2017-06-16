@@ -1,6 +1,6 @@
 <?php
 
-namespace Tnqsoft\DemoBundle\Tests\Controller;
+namespace Tnqsoft\UserBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

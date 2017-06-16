@@ -27,6 +27,7 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             new Tnqsoft\MaterialBundle\TnqsoftMaterialBundle(),
             new Tnqsoft\AdminBundle\TnqsoftAdminBundle(),
+            new Tnqsoft\UserBundle\TnqsoftUserBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

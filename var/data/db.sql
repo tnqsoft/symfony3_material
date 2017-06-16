@@ -91,6 +91,24 @@ CREATE TABLE `tbl_news_category` (
 
 /*Data for the table `tbl_news_category` */
 
+/*Table structure for table `tbl_page` */
+
+DROP TABLE IF EXISTS `tbl_page`;
+
+CREATE TABLE `tbl_page` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  `content` longtext,
+  `is_active` tinyint(1) DEFAULT '1',
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `slug_UNIQUE` (`slug`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+/*Data for the table `tbl_page` */
+
 /*Table structure for table `tbl_tags` */
 
 DROP TABLE IF EXISTS `tbl_tags`;
@@ -102,6 +120,33 @@ CREATE TABLE `tbl_tags` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_tags` */
+
+/*Table structure for table `tbl_user` */
+
+DROP TABLE IF EXISTS `tbl_user`;
+
+CREATE TABLE `tbl_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
+  `fullname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `phone` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
+  `description` longtext COLLATE utf8_unicode_ci,
+  `avatar` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `reset_token` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `reset_timeout` datetime DEFAULT NULL,
+  `is_active` tinyint(1) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `roles` longtext CHARACTER SET utf8 NOT NULL COMMENT '(DC2Type:json_array)',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_8D93D649F85E0677` (`username`),
+  UNIQUE KEY `UNIQ_8D93D649E7927C74` (`email`),
+  UNIQUE KEY `UNIQ_8D93D649444F97DD` (`phone`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `tbl_user` */
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

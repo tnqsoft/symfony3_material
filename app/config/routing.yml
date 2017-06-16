@@ -3,6 +3,11 @@ tnqsoft_admin:
     type:     annotation
     prefix:   /admin
 
+tnqsoft_user:
+    resource: "@TnqsoftUserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 tnqsoft_material:
     resource: "@TnqsoftMaterialBundle/Resources/config/routing.yml"
     prefix:   /
