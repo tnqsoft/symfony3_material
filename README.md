@@ -109,7 +109,7 @@ php bin/console doctrine:migrations:migrate 20170418031634 --env=dev
 
 php bin/console doctrine:migrations:generate --env=dev
 
-php bin/console generate:bundle --namespace=Tnqsoft/CommonBundle --dir=src --format=annotation --no-interaction
+php bin/console generate:bundle --namespace=Tnqsoft/AdminBundle --dir=src --format=annotation --no-interaction
 
 php bin/console doctrine:generate:entities AppBundle/Entity/User
 

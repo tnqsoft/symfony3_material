@@ -1,0 +1,7 @@
+parameters:
+  logger_mail_subject: "[SYMFONY3-MATERIAL][PROD] Lỗi hệ thống!"
+  database_host: 127.0.0.1
+  database_port: null
+  database_name: symfony3material
+  database_user: root
+  database_password: 123456

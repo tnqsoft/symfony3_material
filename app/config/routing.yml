@@ -1,7 +1,7 @@
-tnqsoft_demo:
-    resource: "@TnqsoftDemoBundle/Controller/"
+tnqsoft_admin:
+    resource: "@TnqsoftAdminBundle/Controller/"
     type:     annotation
-    prefix:   /demo
+    prefix:   /admin
 
 tnqsoft_material:
     resource: "@TnqsoftMaterialBundle/Resources/config/routing.yml"
