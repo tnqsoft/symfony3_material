@@ -55,4 +55,25 @@ class CategoryController extends BaseCrudController
             'categories' => $categories
         ));
     }
+
+    //Implemnet Abstract Method------------------------------------
+    /**
+     * Get Route Prefix
+     *
+     * @return string
+     */
+    public function getRoutePrefix()
+    {
+        return 'admin_category';
+    }
+
+    /**
+     * Get Template Folder
+     *
+     * @return string
+     */
+    public function getTemplateFolder()
+    {
+        return 'TnqsoftDemoBundle:News';
+    }
 }
