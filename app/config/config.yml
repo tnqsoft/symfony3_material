@@ -101,8 +101,8 @@ mobile_detect: ~
 bazinga_js_translation:
     locale_fallback: vi
 
-jms_serializer:
-    enable_short_alias: false
+# jms_serializer:
+#     enable_short_alias: false
 
 #LOG Config
 monolog:

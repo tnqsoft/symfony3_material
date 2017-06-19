@@ -1,13 +1,13 @@
 {% extends 'TnqsoftAdminBundle:Layout:layout.html.twig' %}
 {##############################################################################}
 {% block body %}
-  {#<p class="text-center">
-    <img src="{{ asset('img/logo.jpg') }}" height="200"/>
-  </p>#}
+  <p class="text-center">
+    <img src="{{ asset('bundles/tnqsoftadmin/img/logo.png') }}" class="page-logo"/>
+  </p>
 
   <form action="{{ path('admin_user_login') }}" method="post">
     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
-    <div class="panel panel-default panel-login">
+    <div class="panel panel-primary panel-login">
       <div class="panel-heading">
         <h3 class="panel-title">Đăng nhập hệ thống</h3>
       </div>
@@ -47,11 +47,10 @@
         </div>
       </div>
     </div>
-
     {#
-        If you want to control the URL the user
-        is redirected to on success (more details below)
-        <input type="hidden" name="_target_path" value="/account" />
-    #}
+          If you want to control the URL the user
+          is redirected to on success (more details below)
+          <input type="hidden" name="_target_path" value="/account" />
+      #}
   </form>
 {% endblock %}

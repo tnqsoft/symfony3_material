@@ -1,28 +1,90 @@
-.button-horizontal-list {
-    padding: 0;
-    margin: 0;
-    list-style: none;
+.navbar-inverse {
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
 }
-.button-horizontal-list > li {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    float: left;
-    margin-right: 10px;
+
+.button-horizontal-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.button-horizontal-list>li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  float: left;
+  margin-right: 10px;
 }
 
 i[class*="fa-"] {
-    vertical-align: middle;
+  vertical-align: middle;
 }
 
 .pagination-text {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 
 .alert {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .table-list-tools {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
+
+.panel-login {
+  width: 400px;
+  max-width: 95%;
+  margin: auto;
+}
+
+.page-logo {
+  width: 400px;
+  max-width: 95%;
+  margin: 30px auto;
+}
+
+.page-header {
+  padding-bottom: 0px;
+  margin: 0px 0px 15px;
+}
+
+.page-header h1 {
+  font-size: 20px;
+}
+
+.page-header h1 small {
+  font-size: 95%;
+  color: #00a65a;
+}
+
+a.link-inverse {
+  color: #fff;
+  cursor: pointer;
+}
+
+
+/* BUTTONS */
+.btn-squared {
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  padding-top: 20px;
+  position: relative;
+  margin: 5px;
+}
+.btn-squared i[class*="fa"] {
+  margin-bottom: 10px;
+}
+.btn-squared .badge {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+.btn-squared span {
+  font-size: 11px;
+  display: block;
+}
+/* BUTTONS END */

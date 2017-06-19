@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c34ba7480f35b059f862174c92e183a4",
-    "content-hash": "254ce65a926e4fbeb575003b5de126cb",
+    "hash": "7dde63a4537478423020034b44b2234d",
+    "content-hash": "c1f955ff701a5746dd71cc16a4b1268c",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1467,17 +1467,16 @@
         },
         {
             "name": "jms/serializer-bundle",
-            "version": "1.5.0",
-            "target-dir": "JMS/SerializerBundle",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/JMSSerializerBundle.git",
-                "reference": "85ee039a2b7f89d77c403e33cee7b43a875c31e5"
+                "reference": "90373f0ed225b204bed66cc3f6837746c5902ac5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/85ee039a2b7f89d77c403e33cee7b43a875c31e5",
-                "reference": "85ee039a2b7f89d77c403e33cee7b43a875c31e5",
+                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/90373f0ed225b204bed66cc3f6837746c5902ac5",
+                "reference": "90373f0ed225b204bed66cc3f6837746c5902ac5",
                 "shasum": ""
             },
             "require": {
@@ -1508,19 +1507,26 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.5-dev"
+                    "dev-master": "2.x-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "JMS\\SerializerBundle": ""
-                }
+                "psr-4": {
+                    "JMS\\SerializerBundle\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
             "authors": [
+                {
+                    "name": "Asmir Mustafic",
+                    "email": "goetas@gmail.com"
+                },
                 {
                     "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com"
@@ -1535,7 +1541,7 @@
                 "serialization",
                 "xml"
             ],
-            "time": "2017-05-10 10:17:17"
+            "time": "2017-05-17 10:26:43"
         },
         {
             "name": "kriswallsmith/assetic",

@@ -37,8 +37,7 @@
         "giggsey/libphonenumber-for-php": "^8.0",
         "suncat/mobile-detect-bundle": "1.0.*",
         "friendsofsymfony/jsrouting-bundle": "@stable",
-        "willdurand/js-translation-bundle": "@stable",
-        "jms/serializer-bundle": "^1.1"
+        "willdurand/js-translation-bundle": "@stable"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

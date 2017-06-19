@@ -5,13 +5,13 @@ namespace Tnqsoft\AdminBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-class DefaultController extends Controller
+class DashboardController extends Controller
 {
     /**
      * @Route("/", name="admin_dashboard")
      */
     public function indexAction()
     {
-        return $this->render('TnqsoftAdminBundle:Default:index.html.twig');
+        return $this->render('TnqsoftAdminBundle:Dashboard:index.html.twig');
     }
 }

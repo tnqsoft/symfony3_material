@@ -1,0 +1,102 @@
+{% extends 'TnqsoftAdminBundle:Layout:layout.html.twig' %}
+{##############################################################################}
+{% block body %}
+  <div class="page-header">
+    <h1>Xin chào
+      <small>Admin</small>
+    </h1>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Liên kết</h3>
+        </div>
+        <div class="panel-body">
+          {% include 'TnqsoftAdminBundle:Partials:quick-link.html.twig' with {} %}
+        </div>
+      </div>
+      <!-- /.panel -->
+
+    </div>
+    <!-- /.col -->
+    <div class="col-xs-12 col-sm-6">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Liên kết nhanh</h3>
+        </div>
+        <div class="panel-body">
+          <p><a href="#">Thêm mới trang</a></p>
+          <p><a href="#">Thêm mới bài viết</a></p>
+          <p><a href="#">Thêm mới sản phẩm</a></p>
+          <p><a href="#">Quản lý đơn hàng</a></p>
+        </div>
+      </div>
+      <!-- /.panel -->
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-xs-6">
+              <h3 class="panel-title">Cập nhật</h3>
+            </div>
+            <div class="col-xs-6 text-right">
+              <a href="#" class="link-inverse"><i class="fa fa-plus"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th width="20%">Ngày</th>
+                <th width="70%">Chú thích</th>
+                <th width="10%" nowrap>Người dùng</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td nowrap>2017-06-19 12:00</td>
+                <td><a href="#">Cập nhật bài viết</a></td>
+                <td nowrap>Admin</td>
+              </tr>
+              <tr>
+                <td nowrap>2017-06-19 12:00</td>
+                <td><a href="#">Cập nhật bài viết</a></td>
+                <td nowrap>Admin</td>
+              </tr>
+              <tr>
+                <td nowrap>2017-06-19 12:00</td>
+                <td><a href="#">Cập nhật bài viết</a></td>
+                <td nowrap>Admin</td>
+              </tr>
+              <tr>
+                <td nowrap>2017-06-19 12:00</td>
+                <td><a href="#">Cập nhật bài viết</a></td>
+                <td nowrap>Admin</td>
+              </tr>
+              <tr>
+                <td nowrap>2017-06-19 12:00</td>
+                <td><a href="#">Cập nhật bài viết</a></td>
+                <td nowrap>Admin</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- /.panel -->
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Thông tin phần mềm</h3>
+        </div>
+        <div class="panel-body">
+          <p><strong>Symfony 3 CMS</strong></p>
+          <p>Version 1.0.0</p>
+        </div>
+      </div>
+      <!-- /.panel -->
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+{% endblock %}
