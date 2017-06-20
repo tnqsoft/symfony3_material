@@ -88,3 +88,9 @@ a.link-inverse {
   display: block;
 }
 /* BUTTONS END */
+
+.nav-user-avatar {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
