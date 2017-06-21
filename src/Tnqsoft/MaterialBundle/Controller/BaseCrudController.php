@@ -12,6 +12,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 use Tnqsoft\MaterialBundle\Form\Type\DeleteType;
 use Tnqsoft\MaterialBundle\Form\Type\SearchType;
+use Tnqsoft\MaterialBundle\Service\Breadcrumb;
+use Tnqsoft\MaterialBundle\Service\Model\Link;
 
 abstract class BaseCrudController extends Controller
 {
@@ -20,9 +22,21 @@ abstract class BaseCrudController extends Controller
     const RELATIVE_PATH = UrlGeneratorInterface::RELATIVE_PATH;
     const NETWORK_PATH = UrlGeneratorInterface::NETWORK_PATH;
 
+    /**
+     * @var Breadcrumb
+     */
+    protected $breadcrumb;
+
     abstract public function getRoutePrefix();
 
     abstract public function getTemplateFolder();
+
+    public function __construct()
+    {
+        $this->breadcrumb = new Breadcrumb();
+
+        $this->breadcrumb->addLink(new Link('Trang chủ', 'admin_dashboard', array(), false, 'home'));
+    }
 
     /**
      * Get Route Name Full
@@ -171,6 +185,7 @@ abstract class BaseCrudController extends Controller
         $defaultParams = array(
             'router_prefix' => $this->getRoutePrefix().'_',
             'controller_template_folder' => $this->getTemplateFolder().':',
+            'breadcrumb' => $this->breadcrumb
         );
         $parameters = array_merge($defaultParams, $parameters);
 

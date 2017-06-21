@@ -12,6 +12,8 @@
     {% include 'TnqsoftAdminBundle:Partials:nav.html.twig' with {} %}
 
     <div class="container-fluid">
+        {{ render_breadcrumb(breadcrumb) }}
+
         {% block body %}{% endblock %}
     </div>
     <!-- /.container -->

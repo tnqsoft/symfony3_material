@@ -15,6 +15,8 @@ use Tnqsoft\MaterialBundle\Form\Type\DeleteType;
 use Tnqsoft\AdminBundle\Entity\Page;
 use Tnqsoft\AdminBundle\Form\PageType;
 
+use Tnqsoft\MaterialBundle\Service\Model\Link;
+
 /**
  * Page controller.
  *
@@ -30,6 +32,9 @@ class PageController extends BaseCrudController
      */
     public function indexAction(Request $request)
     {
+        // Add breadcrumb link
+        $this->breadcrumb->addLink(new Link('Trang tĩnh', $this->getRouteNameFull('list')));
+
         $criteria = $this->getCriteriaQuery($request);
 
         $searchForm = $this->createSearchForm();
@@ -55,6 +60,10 @@ class PageController extends BaseCrudController
      */
     public function newAction(Request $request)
     {
+        // Add breadcrumb link
+        $this->breadcrumb->addLink(new Link('Trang tĩnh', $this->getRouteNameFull('list')));
+        $this->breadcrumb->addLink(new Link('Thêm mới', $this->getRouteNameFull('new')));
+
         $entity = new Page();
         $form = $this->createForm(PageType::class, $entity);
         $form->handleRequest($request);
@@ -88,6 +97,10 @@ class PageController extends BaseCrudController
      */
     public function editAction(Request $request, Page $entity)
     {
+        // Add breadcrumb link
+        $this->breadcrumb->addLink(new Link('Trang tĩnh', $this->getRouteNameFull('list')));
+        $this->breadcrumb->addLink(new Link('Cập nhật', $this->getRouteNameFull('edit')));
+
         $deleteForm = $this->createDeleteForm($entity);
         $form = $this->createForm(PageType::class, $entity);
         $form->handleRequest($request);
@@ -118,6 +131,10 @@ class PageController extends BaseCrudController
      */
     public function showAction(Page $entity)
     {
+        // Add breadcrumb link
+        $this->breadcrumb->addLink(new Link('Trang tĩnh', $this->getRouteNameFull('list')));
+        $this->breadcrumb->addLink(new Link('Chi tiết', $this->getRouteNameFull('show')));
+
         $form = $this->createDeleteForm();
 
         return $this->buildParams(array(

@@ -94,3 +94,12 @@ a.link-inverse {
   height: 20px;
   margin-right: 10px;
 }
+
+.breadcrumb {
+  background: none transparent;
+  text-align: right;
+}
+.breadcrumb>li+li:before {
+    content: "\f0da";
+    font-family: FontAwesome;
+}

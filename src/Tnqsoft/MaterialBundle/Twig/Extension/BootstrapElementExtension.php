@@ -4,6 +4,7 @@ namespace Tnqsoft\MaterialBundle\Twig\Extension;
 
 use Symfony\Component\HttpFoundation\Session\Session;
 use \Twig_Environment as Environment;
+use Tnqsoft\MaterialBundle\Service\Breadcrumb;
 
 class BootstrapElementExtension extends \Twig_Extension
 {
@@ -36,7 +37,8 @@ class BootstrapElementExtension extends \Twig_Extension
     /**
      * {@inheritdoc}
      */
-    public function getFunctions() {
+    public function getFunctions()
+    {
         return array(
             new \Twig_SimpleFunction('table_start', array($this, 'genTableStart'), $this->methodOptions),
             new \Twig_SimpleFunction('table_end', array($this, 'genTableEnd'), $this->methodOptions),
@@ -50,6 +52,7 @@ class BootstrapElementExtension extends \Twig_Extension
             new \Twig_SimpleFunction('flash_message', array($this, 'genFlashMessage'), $this->methodOptions),
             new \Twig_SimpleFunction('pagination', array($this, 'genPagination'), $this->methodOptions),
             new \Twig_SimpleFunction('search_box', array($this, 'genSearchbox'), $this->methodOptions),
+            new \Twig_SimpleFunction('render_breadcrumb', array($this, 'genBreadcrumb'), $this->methodOptions),
 
         );
     }
@@ -58,10 +61,12 @@ class BootstrapElementExtension extends \Twig_Extension
      * Generate table start
      *
      * @param \Twig_Environment $env
+     * @param array $context
      * @param array $options
      * @return string
      */
-    public function genTableStart(\Twig_Environment $env, $context, array $options = array()) {
+    public function genTableStart(\Twig_Environment $env, $context, array $options = array())
+    {
         return $env->loadTemplate($this->template)->renderBlock('start', $options);
     }
 
@@ -69,10 +74,12 @@ class BootstrapElementExtension extends \Twig_Extension
      * Generate table end
      *
      * @param \Twig_Environment $env
+     * @param array $context
      * @param array $options
      * @return string
      */
-    public function genTableEnd(\Twig_Environment $env, $context, array $options = array()) {
+    public function genTableEnd(\Twig_Environment $env, $context, array $options = array())
+    {
         return $env->loadTemplate($this->template)->renderBlock('end', $options);
     }
 
@@ -80,10 +87,12 @@ class BootstrapElementExtension extends \Twig_Extension
      * Generate table head
      *
      * @param \Twig_Environment $env
+     * @param array $context
      * @param array $options
      * @return string
      */
-    public function genTableHead(\Twig_Environment $env, $context, array $options = array()) {
+    public function genTableHead(\Twig_Environment $env, $context, array $options = array())
+    {
         $default = array(
             'app' => $context['app'],
         );
@@ -95,10 +104,12 @@ class BootstrapElementExtension extends \Twig_Extension
      * Generate pagination
      *
      * @param \Twig_Environment $env
+     * @param array $context
      * @param array $options
      * @return string
      */
-    public function genPagination(\Twig_Environment $env, $context, array $options = array()) {
+    public function genPagination(\Twig_Environment $env, $context, array $options = array())
+    {
         $default = array(
             'app' => $context['app'],
             'size' => '',
@@ -111,10 +122,12 @@ class BootstrapElementExtension extends \Twig_Extension
      * Generate icon fontawesome
      *
      * @param \Twig_Environment $env
+     * @param array $context
      * @param array $options
      * @return string
      */
-    public function genIcon(\Twig_Environment $env, $context, array $options = array()) {
+    public function genIcon(\Twig_Environment $env, $context, array $options = array())
+    {
         return $env->loadTemplate($this->template)->renderBlock('icon', $options);
     }
 
@@ -122,10 +135,12 @@ class BootstrapElementExtension extends \Twig_Extension
      * Generate button
      *
      * @param \Twig_Environment $env
+     * @param array $context
      * @param array $options
      * @return string
      */
-    public function genButton(\Twig_Environment $env, $context, array $options = array()) {
+    public function genButton(\Twig_Environment $env, $context, array $options = array())
+    {
         $default = array(
             'type' => 'button',
             'class' => 'default'
@@ -138,10 +153,12 @@ class BootstrapElementExtension extends \Twig_Extension
      * Generate button
      *
      * @param \Twig_Environment $env
+     * @param array $context
      * @param array $options
      * @return string
      */
-    public function genLinkButton(\Twig_Environment $env, $context, array $options = array()) {
+    public function genLinkButton(\Twig_Environment $env, $context, array $options = array())
+    {
         $default = array(
             'href' => '#',
             'class' => 'default'
@@ -154,10 +171,12 @@ class BootstrapElementExtension extends \Twig_Extension
      * Generate button
      *
      * @param \Twig_Environment $env
+     * @param array $context
      * @param array $options
      * @return string
      */
-    public function genLinkAnchor(\Twig_Environment $env, $context, array $options = array()) {
+    public function genLinkAnchor(\Twig_Environment $env, $context, array $options = array())
+    {
         $default = array(
             'href' => '#',
             'class' => ''
@@ -170,6 +189,7 @@ class BootstrapElementExtension extends \Twig_Extension
      * Generate modal delete
      *
      * @param \Twig_Environment $env
+     * @param array $context
      * @param array $options
      * @return string
      */
@@ -189,6 +209,7 @@ class BootstrapElementExtension extends \Twig_Extension
      * Generate Alert
      *
      * @param \Twig_Environment $env
+     * @param array $context
      * @param array $options
      * @return string
      */
@@ -206,6 +227,7 @@ class BootstrapElementExtension extends \Twig_Extension
      * Generate flash message
      *
      * @param \Twig_Environment $env
+     * @param array $context
      * @param array $options
      * @return string
      */
@@ -243,12 +265,28 @@ class BootstrapElementExtension extends \Twig_Extension
      * Generate Alert
      *
      * @param \Twig_Environment $env
+     * @param array $context
      * @param array $options
      * @return string
      */
     public function genSearchbox(\Twig_Environment $env, $context, array $options = array())
     {
         return $env->loadTemplate($this->template)->renderBlock('searchbox', $options);
+    }
+
+    /**
+     * Generate Breadcrumb
+     *
+     * @param \Twig_Environment $env
+     * @param array $context
+     * @param Breadcrumb $readcrumb
+     * @return string
+     */
+    public function genBreadcrumb(\Twig_Environment $env, $context, Breadcrumb $breadcrumb)
+    {
+        return $env->loadTemplate($this->template)->renderBlock('breadcrumb', array(
+            'breadcrumb' => $breadcrumb
+        ));
     }
 
     /**

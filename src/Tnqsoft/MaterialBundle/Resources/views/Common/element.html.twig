@@ -241,3 +241,32 @@ with {
 </div><!-- /input-group -->
 {{ form_end(form) }}
 {% endblock %}
+
+{#----------------------------------------------------------#}
+
+{# BREADCRUMB #}
+{% block breadcrumb %}
+{% if breadcrumb.links|length > 1 %}
+<ol class="breadcrumb">
+  {% for link in breadcrumb.links %}
+    {% if loop.last %}
+      <li class="active">
+        {% if link.icon is not null %}
+        <i class="fa fa-{{ link.icon }}"></i>
+        {% endif %}
+        {{ link.label | trans  }}
+      </li>
+    {% else %}
+      <li>
+        <a href="{{ path(link.routerName, link.routerParams, null, link.keepParams) }}">
+          {% if link.icon is not null %}
+          <i class="fa fa-{{ link.icon }}"></i>
+          {% endif %}
+          {{ link.label | trans }}
+        </a>
+      </li>
+    {% endif %}
+  {% endfor %}
+</ol>
+{% endif %}
+{% endblock %}

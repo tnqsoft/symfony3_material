@@ -112,7 +112,7 @@ monolog:
             action_level: info
             handler:      grouped
             level:        debug
-            channels:     [!event]
+            channels:     ['!event', '!translation']
         console:
             type: console
             process_psr_3_messages: false
