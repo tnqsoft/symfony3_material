@@ -1,0 +1,47 @@
+{% extends 'TnqsoftAdminBundle:Layout:layout.html.twig' %}
+{##############################################################################}
+{% block body %}
+    <div class="page-header">
+        <h1>Trang tĩnh
+            <small>Chi tiết</small>
+        </h1>
+    </div>
+
+    {{ flash_message() }}
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-3 text-right"><strong>Title:</strong>
+                </div>
+                <div class="col-sm-9">{{ entity.title }}</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3 text-right"><strong>Liên kết ngoài:</strong>
+                </div>
+                <div class="col-sm-9"><a href="#"><i class="fa fa-external-link"></i> Xem bên ngoài</a></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3 text-right"><strong>Slug:</strong>
+                </div>
+                <div class="col-sm-9">{{ entity.slug }}</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3 text-right"><strong>Content:</strong>
+                </div>
+                <div class="col-sm-9">{{ entity.content | raw }}</div>
+            </div>
+            {% include 'TnqsoftAdminBundle:Partials:Common/created-updated-for-show.html.twig' with {
+                'entity': entity
+            } %}
+        </div>
+    </div>
+
+    <hr/>
+    {% include 'TnqsoftAdminBundle:Partials:Common/btn-for-show-page.html.twig' with {
+        'entity': entity,
+        'router_prefix': router_prefix,
+        'delete_form': delete_form
+    } %}
+
+{% endblock %}

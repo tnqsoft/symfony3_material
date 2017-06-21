@@ -1,0 +1,12 @@
+{% if entity.createdAt %}
+    <div class="row">
+        <div class="col-sm-3 text-right"><strong class="text-muted">Created At:</strong></div>
+        <div class="col-sm-9 text-muted">{{ entity.createdAt|date('Y-m-d H:i:s') }}</div>
+    </div>
+{% endif %}
+{% if entity.updatedAt %}
+    <div class="row">
+        <div class="col-sm-3 text-right"><strong class="text-muted">Updated At:</strong></div>
+        <div class="col-sm-9 text-muted">{{ entity.updatedAt|date('Y-m-d H:i:s') }}</div>
+    </div>
+{% endif %}

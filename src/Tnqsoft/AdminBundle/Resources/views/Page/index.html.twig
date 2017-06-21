@@ -1,0 +1,98 @@
+{% extends 'TnqsoftAdminBundle:Layout:layout.html.twig' %}
+{##############################################################################}
+{% block body %}
+    <div class="page-header">
+        <h1>Author
+            <small>List</small>
+        </h1>
+    </div>
+
+    <div class="row table-list-tools">
+        <div class="col-sm-9">
+            {{ link_button({
+                'text': 'Add New',
+                'href': path(router_prefix ~ 'new', {}, null, true),
+                'class': 'success',
+                'icon': 'plus',
+            }) }}
+        </div>
+        <div class="col-sm-3">
+            {{ search_box({
+                url: path(router_prefix ~ 'list'),
+                form: search_form
+            }) }}
+        </div>
+    </div>
+
+    {{ flash_message() }}
+
+    {{ table_start({ id: 'tableDemo' }) }}
+        {{ table_head({
+            class: 'info',
+            columns: [
+                {
+                    width: '30%',
+                    label: 'title',
+                    field: 'title'
+                },
+                {
+                    width: '30%',
+                    label: 'slug',
+                    field: 'slug'
+                },
+                {
+                    width: '15%',
+                    label: 'createdat',
+                    field: 'createdAt'
+                },
+                {
+                    width: '15%',
+                    label: 'updatedat',
+                    field: 'updatedAt'
+                },
+                {
+                    width: '1%',
+                    label: '<i class="fa fa-key"></i>',
+                    field: 'id',
+                    nowrap: true
+                },
+                {
+                    width: '9%',
+                    label: ''
+                },
+            ]
+        }) }}
+        <tbody>
+        {% if paginator|length > 0 %}
+        {% for entity in paginator %}
+            <tr>
+                <td><a href="{{ path(router_prefix ~ 'show', { 'id': entity.id }, null, true) }}">{{ entity.title }}</a></td>
+                <td>{{ entity.slug }}</td>
+                <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.updatedAt %}{{ entity.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.id }}</td>
+                <td>
+                    {{ link_button({
+                        'text': '',
+                        'href': path(router_prefix ~ 'show', { 'id': entity.id }, null, true),
+                        'class': 'primary',
+                        'icon': 'eye',
+                        'attr': 'data-toggle="tooltip" data-placement="top" title="Detail"'
+                    }) }}
+                    {{ link_button({
+                        'text': '',
+                        'href': path(router_prefix ~ 'edit', { 'id': entity.id }, null, true),
+                        'class': 'info',
+                        'icon': 'pencil',
+                        'attr': 'data-toggle="tooltip" data-placement="top" title="Edit"'
+                    }) }}
+                </td>
+            </tr>
+        {% endfor %}
+        {% endif %}
+        </tbody>
+    {{ table_end() }}
+
+    {{ pagination({ paginator: paginator }) }}
+
+{% endblock %}

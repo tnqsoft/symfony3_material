@@ -1,0 +1,62 @@
+{% form_theme form 'TnqsoftMaterialBundle:Form:form_horizontal_layout.html.twig' %}
+
+{{ flash_message() }}
+
+<div class="row">
+    <div class="col-sm-6">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <div class="form-group">
+            <div class="col-sm-8 col-sm-offset-4">
+                <ul class="button-horizontal-list clearfix">
+                    <li>
+                        {{ link_button({
+                            'text': 'Quay lại',
+                            'href': path(router_prefix ~ 'list', {}, null, true),
+                            'class': 'default',
+                            'icon': 'chevron-left',
+                        }) }}
+                    </li>
+                    <li>
+                        {{ button({
+                            'text': entity.id ? 'Cập nhật' : 'Thêm',
+                            'type': 'submit',
+                            'class': 'primary',
+                            'icon': 'save',
+                        }) }}
+                    </li>
+                    {% if entity.id is null %}
+                    <li>
+                        {{ button({
+                            'text': 'Ghi nhớ và thêm',
+                            'type': 'submit',
+                            'class': 'primary',
+                            'icon': 'save',
+                            'attr': 'name="btnSaveAndAdd"'
+                        }) }}
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+        {{ form_end(form) }}
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-4">
+                <ul class="button-horizontal-list clearfix">
+                    <li>
+                        {% if delete_form is defined %}
+                            {{ form_start(delete_form) }}
+                            {{ button({
+                                'text': 'Xóa',
+                                'type': 'submit',
+                                'class': 'danger',
+                                'icon': 'trash',
+                            }) }}
+                            {{ form_end(delete_form) }}
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

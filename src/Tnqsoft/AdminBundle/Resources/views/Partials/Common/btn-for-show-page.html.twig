@@ -1,0 +1,30 @@
+<ul class="button-horizontal-list clearfix">
+    <li>
+        {{ link_button({
+        'text': 'Quay lại',
+        'href': path(router_prefix ~ 'list', {}, null, true),
+        'class': 'default',
+        'icon': 'chevron-left',
+    }) }}
+    </li>
+    <li>
+        {{ form_start(delete_form, {'action': path(router_prefix ~ 'delete', { 'id': entity.id }, null, true)}) }}
+        {{ button({
+        'text': '',
+        'type': 'submit',
+        'class': 'danger',
+        'icon': 'trash',
+        'attr': 'data-toggle="tooltip" data-placement="top" title="Delete"'
+    }) }}
+        {{ form_end(delete_form) }}
+    </li>
+    <li>
+        {{ link_button({
+            'text': '',
+            'href': path(router_prefix ~ 'edit', { 'id': entity.id }, null, true),
+            'class': 'info',
+            'icon': 'pencil',
+            'attr': 'data-toggle="tooltip" data-placement="top" title="Edit"'
+        }) }}
+    </li>
+</ul>

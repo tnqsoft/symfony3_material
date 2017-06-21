@@ -103,17 +103,7 @@ php bin/console assets:install --symlink web
 
 php bin/console assetic:dump --env=dev
 
-php bin/console doctrine:migrations:diff --env=dev
-
-php bin/console doctrine:migrations:migrate 20170418031634 --env=dev
-
-php bin/console doctrine:migrations:generate --env=dev
-
 php bin/console generate:bundle --namespace=Tnqsoft/AdminBundle --dir=src --format=annotation --no-interaction
-
-php bin/console doctrine:generate:entities AppBundle/Entity/User
-
-php bin/console doctrine:schema:update --force --env=dev
 
 #https://symfony.com/doc/master/bundles/FOSJsRoutingBundle/usage.html
 php bin/console fos:js-routing:dump --env=dev
@@ -122,6 +112,11 @@ php bin/console fos:js-routing:dump --env=dev
 php bin/console bazinga:js-translation:dump [target] [--format=js|json] [--merge-domains]
 php bin/console bazinga:js-translation:dump
 
+php bin/console app:add-user
+```
+
+## Working with Doctrine
+```
 # Generate Entity From Database
 php bin/console doctrine:mapping:import --force TnqsoftDemoBundle xml
 php bin/console doctrine:mapping:convert annotation ./src
@@ -131,5 +126,13 @@ php bin/console doctrine:generate:entities TnqsoftDemoBundle
 php bin/console generate:doctrine:crud
 php bin/console generate:doctrine:crud --entity=TnqsoftDemoBundle:Author --format=annotation --with-write --no-interaction
 
-php bin/console app:add-user
+php bin/console doctrine:migrations:diff --env=dev
+php bin/console doctrine:migrations:migrate 20170418031634 --env=dev
+php bin/console doctrine:migrations:generate --env=dev
+
+php bin/console doctrine:generate:entities AppBundle/Entity/User
+php bin/console doctrine:schema:update --force --env=dev
+
+php bin/console doctrine:generate:form TnqsoftAdminBundle:Page
+
 ```

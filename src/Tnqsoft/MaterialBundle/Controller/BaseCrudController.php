@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
+use Tnqsoft\MaterialBundle\Form\Type\DeleteType;
 use Tnqsoft\MaterialBundle\Form\Type\SearchType;
 
 abstract class BaseCrudController extends Controller
@@ -62,17 +63,18 @@ abstract class BaseCrudController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    public function createDeleteForm($entity)
+    public function createDeleteForm()
     {
-        return $this->createFormBuilder(null, array(
-                'attr' => array(
-                      'class' => 'frm-delete'
-                )
-            ))
-            ->setAction($this->generateUrl($this->getRoutePrefix().'_delete', array('id' => $entity->getId()), static::ABSOLUTE_PATH, true))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
+        return $this->createForm(DeleteType::class);
+        // return $this->createFormBuilder(null, array(
+        //         'attr' => array(
+        //               'class' => 'frm-delete'
+        //         )
+        //     ))
+        //     ->setAction($this->generateUrl($this->getRoutePrefix().'_delete', array('id' => $entity->getId()), static::ABSOLUTE_PATH, true))
+        //     ->setMethod('DELETE')
+        //     ->getForm()
+        // ;
     }
 
     /**
@@ -145,6 +147,34 @@ abstract class BaseCrudController extends Controller
     public function redirectToRouteKeepParams($route, array $parameters = array())
     {
         return $this->redirectToRoute($route, $parameters, Response::HTTP_FOUND, static::ABSOLUTE_PATH, true);
+    }
+
+    /**
+     * Renders a view.
+     *
+     * @param string   $view       The view name
+     * @param array    $parameters An array of parameters to pass to the view
+     * @param Response $response   A response instance
+     *
+     * @return Response A Response instance
+     */
+    protected function render($view, array $parameters = array(), Response $response = null)
+    {
+        $view = $this->getTemplateFolder().':'.$view.'.html.twig';
+        $parameters = $this->buildParams($parameters);
+
+        return parent::render($view, $parameters, $response);
+    }
+
+    public function buildParams(array $parameters = array())
+    {
+        $defaultParams = array(
+            'router_prefix' => $this->getRoutePrefix().'_',
+            'controller_template_folder' => $this->getTemplateFolder().':',
+        );
+        $parameters = array_merge($defaultParams, $parameters);
+
+        return $parameters;
     }
 
 }
