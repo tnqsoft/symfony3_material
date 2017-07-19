@@ -12,7 +12,9 @@
     {% include 'TnqsoftAdminBundle:Partials:nav.html.twig' with {} %}
 
     <div class="container-fluid">
+        {% if breadcrumb is defined %}
         {{ render_breadcrumb(breadcrumb) }}
+        {% endif %}
 
         {% block body %}{% endblock %}
     </div>
